@@ -1,0 +1,8 @@
+{
+  "name": "CSCA Exam Practice & Progress Tracking System",
+  "description": "Official-style practice quiz, full-length timed mock examinations, syllabus review, and progress tracking system for the China Scholastic Competency Assessment (CSCA) in Chemistry, Mathematics, Physics, and Professional Chinese.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
