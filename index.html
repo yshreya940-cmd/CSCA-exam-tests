@@ -12,6 +12,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+      // Gracefully prevent unhandled rejections from dev-server websocket disconnection
+      window.addEventListener('unhandledrejection', function (e) {
+        if (
+          e &&
+          e.reason &&
+          ((typeof e.reason.message === 'string' &&
+            (e.reason.message.includes('WebSocket') ||
+              e.reason.message.includes('vite:ws'))) ||
+            (typeof e.reason.stack === 'string' &&
+              e.reason.stack.includes('@vite/client')))
+        ) {
+          e.preventDefault();
+        }
+      });
+      window.addEventListener('error', function (e) {
+        if (
+          (e.filename && e.filename.includes('@vite/client')) ||
+          (e.message && typeof e.message === 'string' && e.message.includes('WebSocket'))
+        ) {
+          e.preventDefault();
+        }
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -43,6 +43,8 @@ export const PracticeHub: React.FC<PracticeHubProps> = ({
     Physics: '/src/assets/images/physics_card_banner_1791957940677.jpg',
     Chemistry: '/src/assets/images/chemistry_card_banner_1791957942918.jpg',
     'Professional Chinese': '/src/assets/images/chinese_card_banner_1791957941308.jpg',
+    'Science Chinese': '/src/assets/images/chinese_card_banner_1791957941308.jpg',
+    'Humanities Chinese': '/src/assets/images/chinese_card_banner_1791957941308.jpg',
   };
 
   return (
@@ -312,11 +314,11 @@ export const PracticeHub: React.FC<PracticeHubProps> = ({
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent"></div>
                   
                   {/* Badges on Image */}
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-xl bg-black/60 backdrop-blur-md text-white text-xs font-mono font-semibold border border-white/20">
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2">
+                    <span className="px-3 py-1 rounded-xl bg-black/60 backdrop-blur-md text-white text-xs font-mono font-semibold border border-white/20 whitespace-nowrap">
                       {syllabus.code}
                     </span>
-                    <span className="px-3 py-1 rounded-xl bg-white/95 text-slate-900 text-xs font-bold shadow-md">
+                    <span className="px-3 py-1 rounded-xl bg-white/95 text-slate-900 text-xs font-bold shadow-md whitespace-nowrap">
                       {syllabus.durationMinutes} min · {syllabus.totalQuestions} Qs
                     </span>
                   </div>

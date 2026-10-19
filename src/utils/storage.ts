@@ -23,16 +23,18 @@ const DEFAULT_SUBJECT_STATS: Record<Subject, {
   Mathematics: { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
   Physics: { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
   Chemistry: { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
+  'Science Chinese': { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
+  'Humanities Chinese': { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
   'Professional Chinese': { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
 };
 
 export const INITIAL_USER_PROGRESS: UserProgress = {
-  candidateId: 'CSC-2025-IN9834',
+  candidateId: 'CSC-2026-IN9834',
   candidateName: 'Scholar Aspirant',
   candidateEmail: 'candidate@csca.edu.cn',
   applicationType: 'CGS',
-  targetUniversity: 'Tsinghua University / Peking University',
-  registeredSubjects: ['Mathematics', 'Physics', 'Chemistry', 'Professional Chinese'],
+  targetUniversity: 'Tsinghua University / Peking University / Fudan',
+  registeredSubjects: ['Mathematics', 'Physics', 'Chemistry', 'Science Chinese', 'Humanities Chinese'],
   sessionsHistory: [],
   totalQuestionsAttempted: 0,
   totalCorrect: 0,

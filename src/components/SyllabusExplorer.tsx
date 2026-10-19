@@ -15,8 +15,15 @@ export const SyllabusExplorer: React.FC<SyllabusExplorerProps> = ({
   const isZh = lang === 'zh';
   const [selectedSubject, setSelectedSubject] = useState<Subject>('Mathematics');
 
-  const subjects: Subject[] = ['Mathematics', 'Physics', 'Chemistry', 'Professional Chinese'];
-  const syllabus = OFFICIAL_SYLLABI[selectedSubject];
+  const subjects: Subject[] = [
+    'Mathematics', 
+    'Physics', 
+    'Chemistry', 
+    'Science Chinese', 
+    'Humanities Chinese', 
+    'Professional Chinese'
+  ];
+  const syllabus = OFFICIAL_SYLLABI[selectedSubject] || OFFICIAL_SYLLABI['Mathematics'];
 
   return (
     <div className="space-y-8 pb-16 max-w-5xl mx-auto">

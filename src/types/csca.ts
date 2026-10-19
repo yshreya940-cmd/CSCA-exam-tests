@@ -1,8 +1,14 @@
-export type Subject = 'Mathematics' | 'Physics' | 'Chemistry' | 'Professional Chinese';
+export type Subject = 
+  | 'Mathematics' 
+  | 'Physics' 
+  | 'Chemistry' 
+  | 'Science Chinese' 
+  | 'Humanities Chinese'
+  | 'Professional Chinese';
 
 export type Language = 'en' | 'zh';
 
-export type QuizMode = 'mock' | 'topic' | 'daily' | 'ai' | 'mistake';
+export type QuizMode = 'mock' | 'topic' | 'daily' | 'ai' | 'mistake' | 'past_paper';
 
 export interface Question {
   id: string;
@@ -19,6 +25,9 @@ export interface Question {
   explanationZh: string;
   formula?: string;
   syllabusRef?: string;
+  examPaper?: string; // e.g., 'January 2026 Official Exam', 'April 2026 Exam', 'March 2026 Exam', 'December 2025 Exam'
+  questionNumber?: number; // 1 to 48 or 1 to 80
+  section?: string; // e.g., '识解汉字', '选词填空', '辨析词语', '选词成段', '补全语句', '阅读理解'
 }
 
 export interface QuizSession {
@@ -26,6 +35,7 @@ export interface QuizSession {
   mode: QuizMode;
   subject: Subject | 'All';
   moduleTitle?: string;
+  examPaper?: string;
   totalQuestions: number;
   timeLimitSeconds: number; // 3600 for 60 min, 5400 for 90 min, 0 for untimed
   timeSpentSeconds: number;

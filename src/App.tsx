@@ -21,7 +21,7 @@ import {
   recordCompletedSession, 
   seedBaselineProgress 
 } from './utils/storage';
-import { OFFICIAL_QUESTION_BANK } from './data/questionBank';
+import { OFFICIAL_QUESTION_BANK, OFFICIAL_EXAM_PAPERS } from './data/questionBank';
 import { OFFICIAL_SYLLABI } from './data/syllabusData';
 import { CscaLogo } from './components/CscaLogo';
 
@@ -33,6 +33,9 @@ export default function App() {
   // Active quiz state
   const [activeSession, setActiveSession] = useState<QuizSession | null>(null);
   const [completedSessionToReview, setCompletedSessionToReview] = useState<QuizSession | null>(null);
+  const [mockViewMode, setMockViewMode] = useState<'past_papers' | 'subjects'>('past_papers');
+  const [selectedSessionFilter, setSelectedSessionFilter] = useState<string>('All');
+  const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<string>('All');
 
   // Initialize or seed baseline on mount
   useEffect(() => {
@@ -55,46 +58,60 @@ export default function App() {
   const handleStartQuiz = (
     mode: QuizMode,
     subject: Subject | 'All',
-    options?: { moduleTitle?: string; count?: number; timeLimit?: number }
+    options?: { moduleTitle?: string; count?: number; timeLimit?: number; examPaper?: string }
   ) => {
     // Collect questions
     let candidates = [...OFFICIAL_QUESTION_BANK];
 
-    if (subject !== 'All') {
-      candidates = candidates.filter((q) => q.subject === subject);
-    }
-
-    if (options?.moduleTitle) {
-      candidates = candidates.filter((q) => q.module.toLowerCase().includes(options.moduleTitle!.toLowerCase()));
-      // If none match strictly, fallback to subject pool
-      if (candidates.length === 0 && subject !== 'All') {
-        candidates = OFFICIAL_QUESTION_BANK.filter((q) => q.subject === subject);
+    if (options?.examPaper) {
+      candidates = candidates.filter((q) => q.examPaper === options.examPaper);
+      if (subject !== 'All') {
+        const bySubject = candidates.filter((q) => q.subject === subject);
+        if (bySubject.length > 0) candidates = bySubject;
       }
-    }
-
-    // Shuffle questions
-    const shuffled = [...candidates].sort(() => 0.5 - Math.random());
-    const targetCount = options?.count || (mode === 'mock' ? (subject === 'Professional Chinese' ? 80 : 48) : 5);
-    
-    // In prototype, if pool is smaller than 48, duplicate/cycle to give realistic exam volume if requested
-    let finalQuestions: Question[] = [];
-    if (shuffled.length >= targetCount) {
-      finalQuestions = shuffled.slice(0, targetCount);
     } else {
-      while (finalQuestions.length < targetCount && shuffled.length > 0) {
-        finalQuestions.push(...shuffled);
+      if (subject !== 'All') {
+        candidates = candidates.filter((q) => q.subject === subject);
       }
-      finalQuestions = finalQuestions.slice(0, targetCount).map((q, i) => ({
-        ...q,
-        id: `${q.id}-q${i + 1}`,
-      }));
+
+      if (options?.moduleTitle) {
+        candidates = candidates.filter((q) => q.module.toLowerCase().includes(options.moduleTitle!.toLowerCase()));
+        if (candidates.length === 0 && subject !== 'All') {
+          candidates = OFFICIAL_QUESTION_BANK.filter((q) => q.subject === subject);
+        }
+      }
+    }
+
+    let finalQuestions: Question[] = [];
+
+    // If an official past paper is selected, preserve the authentic question number ordering
+    if (options?.examPaper && candidates.length > 0) {
+      finalQuestions = [...candidates].sort((a, b) => (a.questionNumber || 0) - (b.questionNumber || 0));
+    } else {
+      // Shuffle questions for randomized practice drills
+      const shuffled = [...candidates].sort(() => 0.5 - Math.random());
+      const isChinese = subject === 'Professional Chinese' || subject === 'Science Chinese' || subject === 'Humanities Chinese';
+      const targetCount = options?.count || (mode === 'mock' ? (isChinese ? 80 : 48) : 5);
+      
+      if (shuffled.length >= targetCount) {
+        finalQuestions = shuffled.slice(0, targetCount);
+      } else {
+        while (finalQuestions.length < targetCount && shuffled.length > 0) {
+          finalQuestions.push(...shuffled);
+        }
+        finalQuestions = finalQuestions.slice(0, targetCount).map((q, i) => ({
+          ...q,
+          id: `${q.id}-q${i + 1}`,
+        }));
+      }
     }
 
     // Duration calculation
     let timeLimit = options?.timeLimit;
     if (timeLimit === undefined) {
-      if (mode === 'mock') {
-        timeLimit = subject === 'Professional Chinese' ? 5400 : 3600; // 90 or 60 min
+      if (mode === 'mock' || mode === 'past_paper') {
+        const isChinese = subject === 'Professional Chinese' || subject === 'Science Chinese' || subject === 'Humanities Chinese';
+        timeLimit = isChinese ? 5400 : 3600; // 90 or 60 min
       } else if (mode === 'daily') {
         timeLimit = 900; // 15 min for 10 Qs
       } else {
@@ -107,6 +124,7 @@ export default function App() {
       mode,
       subject,
       moduleTitle: options?.moduleTitle,
+      examPaper: options?.examPaper,
       totalQuestions: finalQuestions.length,
       timeLimitSeconds: timeLimit,
       timeSpentSeconds: 0,
@@ -273,66 +291,211 @@ export default function App() {
             {currentTab === 'mock' && (
               <div className="space-y-8 max-w-5xl mx-auto">
                 <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200">
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-5">
+                  <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-6">
                     <div>
                       <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-800">
-                        Official Timed Mock Assessment
+                        Official CSCA Examination System
                       </span>
                       <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
-                        {lang === 'zh' ? 'CSCA 全真模拟考场' : 'CSCA Full-Length Timed Examination'}
+                        {lang === 'zh' ? 'CSCA 全真真题与模拟考场' : 'CSCA Real Past Papers & Mock Examination'}
                       </h1>
                       <p className="text-xs sm:text-sm text-slate-500 mt-1">
                         {lang === 'zh' 
-                          ? '严格模拟真实考场倒计时、单选题题型、100分制计分，全面检验综合应试能力。'
-                          : 'Simulate the strict 60/90 minute timed conditions, candidate answer sheet, and 100-point scoring scale.'}
+                          ? '严格模拟真实考场倒计时（60/90分钟）、单选题答题卡、100分制计分，涵盖2026全真试卷与标准大纲。'
+                          : 'Official timed CBT environment (60/90 min countdown), answer sheet, and 100-point scale for 2026 real papers.'}
                       </p>
+                    </div>
+
+                    {/* Sub-navigation pill toggle */}
+                    <div className="flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+                      <button
+                        onClick={() => setMockViewMode('past_papers')}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                          mockViewMode === 'past_papers'
+                            ? 'bg-white text-blue-700 shadow-sm'
+                            : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        {lang === 'zh' ? '历年全真真题 (Past Papers)' : 'Real Past Papers'}
+                      </button>
+                      <button
+                        onClick={() => setMockViewMode('subjects')}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                          mockViewMode === 'subjects'
+                            ? 'bg-white text-blue-700 shadow-sm'
+                            : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        {lang === 'zh' ? '按学科模考 (Subject Mocks)' : 'Subject Mocks'}
+                      </button>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
-                    {(['Mathematics', 'Physics', 'Chemistry', 'Professional Chinese'] as Subject[]).map((subj) => {
-                      const syl = OFFICIAL_SYLLABI[subj];
-                      const subjImages: Record<Subject, string> = {
-                        Mathematics: '/src/assets/images/math_card_banner_1791957939868.jpg',
-                        Physics: '/src/assets/images/physics_card_banner_1791957940677.jpg',
-                        Chemistry: '/src/assets/images/chemistry_card_banner_1791957942918.jpg',
-                        'Professional Chinese': '/src/assets/images/chinese_card_banner_1791957941308.jpg',
-                      };
+                  {/* VIEW 1: Official Past Papers */}
+                  {mockViewMode === 'past_papers' && (
+                    <div className="space-y-6 mt-8">
+                      {/* Filter Controls Bar */}
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        {/* Session filter */}
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                            {lang === 'zh' ? '考期筛选:' : 'Session:'}
+                          </span>
+                          {['All', 'Jan 2026', 'Mar 2026', 'Apr 2026'].map((sess) => (
+                            <button
+                              key={sess}
+                              onClick={() => setSelectedSessionFilter(sess)}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                                selectedSessionFilter === sess
+                                  ? 'bg-blue-600 text-white shadow-sm'
+                                  : 'bg-white text-slate-700 hover:bg-slate-200 border border-slate-200'
+                              }`}
+                            >
+                              {sess === 'All' ? (lang === 'zh' ? '全部考期' : 'All Sessions') : sess}
+                            </button>
+                          ))}
+                        </div>
 
-                      return (
-                        <div key={subj} className="rounded-3xl border border-slate-200 hover:border-blue-500 hover:shadow-lg transition-all flex flex-col justify-between bg-white overflow-hidden group">
-                          <div className="relative h-40 overflow-hidden">
-                            <img
-                              src={subjImages[subj]}
-                              alt={subj}
-                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                              referrerPolicy="no-referrer"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent"></div>
-                            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
-                              <h3 className="font-bold text-white text-lg">{subj}</h3>
-                              <span className="text-xs font-mono font-bold bg-white/90 text-slate-900 px-2.5 py-0.5 rounded-lg shadow-sm">
-                                {syl.durationMinutes} min · {syl.totalQuestions} Qs
-                              </span>
+                        {/* Subject filter */}
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                            {lang === 'zh' ? '学科:' : 'Subject:'}
+                          </span>
+                          {['All', 'Mathematics', 'Physics', 'Chemistry', 'Science Chinese', 'Humanities Chinese'].map((subj) => (
+                            <button
+                              key={subj}
+                              onClick={() => setSelectedSubjectFilter(subj)}
+                              className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
+                                selectedSubjectFilter === subj
+                                  ? 'bg-slate-900 text-white'
+                                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                              }`}
+                            >
+                              {subj === 'All' ? (lang === 'zh' ? '全部科目' : 'All') : subj}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="text-sm font-bold text-slate-800">
+                          {lang === 'zh' ? '2026 官方全真考试卷（中英双语 / 官方答案与详尽推导）' : 'Official CSCA Past Examination Papers (Bilingual & Solutions)'}
+                        </div>
+                        <span className="text-xs text-blue-600 font-semibold bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200">
+                          {OFFICIAL_EXAM_PAPERS.filter((p) => {
+                            const sessMatch = selectedSessionFilter === 'All' || p.sessionMonth === selectedSessionFilter;
+                            const subjMatch = selectedSubjectFilter === 'All' || p.subject === selectedSubjectFilter;
+                            return sessMatch && subjMatch;
+                          }).length} {lang === 'zh' ? '套真题符合条件' : 'Papers Matched'}
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {OFFICIAL_EXAM_PAPERS
+                          .filter((paper) => {
+                            const sessMatch = selectedSessionFilter === 'All' || paper.sessionMonth === selectedSessionFilter;
+                            const subjMatch = selectedSubjectFilter === 'All' || paper.subject === selectedSubjectFilter;
+                            return sessMatch && subjMatch;
+                          })
+                          .map((paper) => (
+                            <div 
+                              key={paper.id} 
+                              className="p-6 rounded-3xl border border-slate-200 hover:border-blue-500 hover:shadow-lg transition-all flex flex-col justify-between bg-white group"
+                            >
+                              <div className="space-y-3">
+                                <div className="flex flex-wrap items-center justify-between gap-2">
+                                  <div className="flex items-center gap-2 flex-wrap min-w-0">
+                                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200 whitespace-nowrap">
+                                      {paper.subject}
+                                    </span>
+                                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 whitespace-nowrap">
+                                      {paper.sessionMonth}
+                                    </span>
+                                  </div>
+                                  <span className="text-xs font-mono font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200 whitespace-nowrap flex-shrink-0">
+                                    {paper.durationMinutes} min · {paper.totalQuestions} Qs
+                                  </span>
+                                </div>
+
+                                <h3 className="font-bold text-slate-900 text-lg group-hover:text-blue-600 transition-colors">
+                                  {lang === 'zh' ? paper.nameZh : paper.nameEn}
+                                </h3>
+
+                                <p className="text-xs text-slate-600 leading-relaxed">
+                                  {lang === 'zh' ? paper.descriptionZh : paper.descriptionEn}
+                                </p>
+                              </div>
+
+                              <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                                <span className="text-xs font-mono text-slate-400">
+                                  Official Key Verified
+                                </span>
+                                <button
+                                  onClick={() => handleStartQuiz('past_paper', paper.subject as any, { 
+                                    examPaper: paper.examPaperTag, 
+                                    count: paper.totalQuestions, 
+                                    timeLimit: paper.durationMinutes * 60 
+                                  })}
+                                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                                >
+                                  <span>{lang === 'zh' ? '开始全真模考' : 'Start Real Exam'}</span>
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* VIEW 2: Subject Practice Mocks */}
+                  {mockViewMode === 'subjects' && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+                      {(['Mathematics', 'Physics', 'Chemistry', 'Science Chinese', 'Humanities Chinese'] as Subject[]).map((subj) => {
+                        const syl = OFFICIAL_SYLLABI[subj] || OFFICIAL_SYLLABI['Mathematics'];
+                        const subjImages: Record<string, string> = {
+                          Mathematics: '/src/assets/images/math_card_banner_1791957939868.jpg',
+                          Physics: '/src/assets/images/physics_card_banner_1791957940677.jpg',
+                          Chemistry: '/src/assets/images/chemistry_card_banner_1791957942918.jpg',
+                          'Science Chinese': '/src/assets/images/chinese_card_banner_1791957941308.jpg',
+                          'Humanities Chinese': '/src/assets/images/chinese_card_banner_1791957941308.jpg',
+                          'Professional Chinese': '/src/assets/images/chinese_card_banner_1791957941308.jpg',
+                        };
+
+                        return (
+                          <div key={subj} className="rounded-3xl border border-slate-200 hover:border-blue-500 hover:shadow-lg transition-all flex flex-col justify-between bg-white overflow-hidden group">
+                            <div className="relative h-40 overflow-hidden">
+                              <img
+                                src={subjImages[subj] || subjImages.Mathematics}
+                                alt={subj}
+                                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                                referrerPolicy="no-referrer"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent"></div>
+                              <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                                <h3 className="font-bold text-white text-lg">{subj}</h3>
+                                <span className="text-xs font-mono font-bold bg-white/90 text-slate-900 px-2.5 py-0.5 rounded-lg shadow-sm">
+                                  {syl.durationMinutes} min · {syl.totalQuestions} Qs
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                              <p className="text-xs text-slate-600 leading-relaxed">
+                                {lang === 'zh' ? syl.purposeZh : syl.purposeEn}
+                              </p>
+
+                              <button
+                                onClick={() => handleStartQuiz('mock', subj, { count: syl.totalQuestions, timeLimit: syl.durationMinutes * 60 })}
+                                className="w-full py-3 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+                              >
+                                <span>{lang === 'zh' ? `开始 ${subj} 模考 (${syl.totalQuestions}题)` : `Start ${subj} Mock (${syl.totalQuestions} Qs)`}</span>
+                              </button>
                             </div>
                           </div>
-
-                          <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                            <p className="text-xs text-slate-600 leading-relaxed">
-                              {lang === 'zh' ? syl.purposeZh : syl.purposeEn}
-                            </p>
-
-                            <button
-                              onClick={() => handleStartQuiz('mock', subj, { count: syl.totalQuestions, timeLimit: syl.durationMinutes * 60 })}
-                              className="w-full py-3 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2"
-                            >
-                              <span>{lang === 'zh' ? `开始 ${subj} 模考 (${syl.totalQuestions}题)` : `Start ${subj} Mock (${syl.totalQuestions} Qs)`}</span>
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             )}

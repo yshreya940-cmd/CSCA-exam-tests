@@ -238,6 +238,188 @@ export const OFFICIAL_SYLLABI: Record<string, SyllabusData> = {
       },
     ],
   },
+  'Science Chinese': {
+    subject: 'Science Chinese',
+    code: 'CSCA-SCICHIN-2025',
+    durationMinutes: 90,
+    totalQuestions: 80,
+    totalPoints: 100,
+    languages: 'Chinese / 简体中文',
+    questionType: 'Multiple Choice (Single Answer) / 客观单项选择题',
+    purposeEn: 'Assesses international students’ professional Chinese language proficiency required for undergraduate STEM studies in China. Evaluates scientific terminology, experimental discourse, data interpretation, and academic comprehension across mathematics, physics, and chemistry.',
+    purposeZh: '评估来华留学生攻读中国普通高校理工类本科专业所需的专业汉语能力。考查基础数理概念（数学符号、物理定律、化学方程式、实验术语）、专业课程内容及数据图表解读与学术论文阅读能力。',
+    modules: [
+      {
+        titleEn: 'Character Identification (Q1-10)',
+        titleZh: '识解汉字（1-10题）',
+        itemsEn: [
+          'Polyphonic characters and pronunciations in science contexts (量, 调, 盛, 数)',
+          'Scientific character orthography and radical semantic associations (熔, 沸, 析, 键)',
+        ],
+        itemsZh: [
+          '多音字读音辨识与理科语境运用（如：测量/容量、调节/调查、盛放/盛开）',
+          '根据拼音辨选汉字，形旁表义辨析（火/热相关字、部首结构）',
+        ],
+      },
+      {
+        titleEn: 'Vocabulary Completion (Q11-25)',
+        titleZh: '选词填空（11-25题）',
+        itemsEn: [
+          'Common scientific verbs and operations (测量, 溶解, 过滤, 搅拌, 计算)',
+          'Physical and chemical property descriptors (稳定, 透明, 导电, 易燃, 均匀)',
+          'Experimental apparatus and parameters (装置, 变量, 结论, 试剂, 样本)',
+        ],
+        itemsZh: [
+          '实验常用动作与操作术语（测量、分析、溶解、过滤、计算、搅拌）',
+          '理科性质与状态表述（稳定、精确、透明、导电、密度、体积）',
+          '科学实验变量与要素搭配（单一变量、实验装置、试剂标签、科学结论）',
+        ],
+      },
+      {
+        titleEn: 'Synonym & Antonym Analysis (Q26-33)',
+        titleZh: '辨析词语（26-33题）',
+        itemsEn: [
+          'Scientific precise synonyms (准确-精确, 严格-严谨, 逐步-渐渐)',
+          'Physical state antonyms (快-慢, 纯净-浑浊, 高-低, 上升-下降)',
+        ],
+        itemsZh: [
+          '近义词细微语体辨析（准确/精确、严格/严谨、韧性/弹性、真实/客观）',
+          '反义词对比（反应快/慢、水质纯净/浑浊、熔点高/低、上升/下降）',
+        ],
+      },
+      {
+        titleEn: 'Textual Cohesion & Cloze (Q34-48)',
+        titleZh: '选词成段（34-48题）',
+        itemsEn: [
+          'Experimental procedural reports and data logging flow (观察, 记录, 验证, 推导)',
+          'Physics and thermodynamics phenomena descriptions (气压, 沸点, 能量, 处于)',
+          'Scientific inquiry and renewable energy themes (化石能源, 沉积, 污染, 课题)',
+        ],
+        itemsZh: [
+          '实验报告与科学探究流程（仔细观察、准确记录、推导公式、验证结论）',
+          '物理热学与天体运动段落填空（坐标位置、气压与沸点、热量传递）',
+          '新能源与生态学科普语段（化石能源、生物沉积、环境污染、研究课题）',
+        ],
+      },
+      {
+        titleEn: 'Sentence Completion & Grammar (Q49-70)',
+        titleZh: '补全语句（49-70题）',
+        itemsEn: [
+          'Resultative complements and action completion (做完, 做成, 做好)',
+          'Comparative structures and scientific passive/disposal sentences (比, 对...有效, 把...保持下去)',
+          'Scientific definition conventions and logical markers (所谓..., 统称为..., 与...有关)',
+        ],
+        itemsZh: [
+          '动补结构与离合词正确语序（做完、洗个手、跑个步）',
+          '比较句与把字句规范（坐高铁比坐飞机更方便、把严谨态度保持下去）',
+          '科技语境固定表述（所谓偶数、统称为光波、与...有关系、实验表明）',
+        ],
+      },
+      {
+        titleEn: 'Scientific Reading Comprehension (Q71-80)',
+        titleZh: '阅读理解（71-80题）',
+        itemsEn: [
+          'Laboratory safety guidelines and instrument operational manuals',
+          'Thermodynamic heat transfer mechanisms (conduction, convection, radiation)',
+          'Scientific apparatus specification plates and role of research laboratories',
+        ],
+        itemsZh: [
+          '实验室安全规范、操作准则与数据真实性要求',
+          '科学原理短文分析（水结冰的反常膨胀、热传递三途径、仪器铭牌参数）',
+          '科学实验室对创新驱动、科研实践与人才培养的深远意义',
+        ],
+      },
+    ],
+  },
+  'Humanities Chinese': {
+    subject: 'Humanities Chinese',
+    code: 'CSCA-HUMCHIN-2025',
+    durationMinutes: 90,
+    totalQuestions: 80,
+    totalPoints: 100,
+    languages: 'Chinese / 简体中文',
+    questionType: 'Multiple Choice (Single Answer) / 客观单项选择题',
+    purposeEn: 'Assesses the professional Chinese language proficiency required for international students pursuing undergraduate degrees in humanities, social sciences, law, education, history, arts, and business in Chinese universities.',
+    purposeZh: '评估来华留学生攻读中国普通高校文科类本科专业（文学、历史、哲学、法学、社会学、艺术、经济学等）所需的专业汉语能力，涵盖人文社科核心词汇、篇章理解与学术语体表达。',
+    modules: [
+      {
+        titleEn: 'Character Identification (Q1-10)',
+        titleZh: '识解汉字（1-10题）',
+        itemsEn: [
+          'Pronunciation of polyphonic characters in humanities texts (长, 好, 还, 要)',
+          'Homophones, radical semantics, and polysemous words (同/问, 白/百, 准, 发)',
+        ],
+        itemsZh: [
+          '多音字读音判别（爱好/好事、归还/还在、要求/要是）',
+          '汉字形义结合辨析（三点水部首、形声字规律、“发”字多义辨析）',
+        ],
+      },
+      {
+        titleEn: 'Vocabulary Completion (Q11-25)',
+        titleZh: '选词填空（11-25题）',
+        itemsEn: [
+          'Common verbs and adjectives (缓解压力, 避免危险, 参观博物馆, 足够的空间)',
+          'Culture, literature, and legal terminology (古典诗词, 传统书法, 合同条款, 实施政策)',
+        ],
+        itemsZh: [
+          '高频动词与形容词搭配（缓解压力、避免危险、提高水平、美好的事物）',
+          '文史与法律情境词汇（四大名著古典小说、中国书法传统艺术、阅读合同条款）',
+        ],
+      },
+      {
+        titleEn: 'Synonyms & Antonyms (Q26-33)',
+        titleZh: '辨析词语（26-33题）',
+        itemsEn: [
+          'Humanities context synonyms (紧张-不安, 重视-关注, 保存-保留, 必须-务必)',
+          'Abstract concept antonyms (成果-后果, 冷静-冲动, 放弃-坚持, 复杂-简单)',
+        ],
+        itemsZh: [
+          '近义词语义侧重辨析（紧张/不安、重视/关注、重新/重做、必须/务必）',
+          '反义词辨识（成果/后果、冷静/冲动、放弃/坚持、珍惜/浪费）',
+        ],
+      },
+      {
+        titleEn: 'Textual Cohesion & Paragraph Cloze (Q34-48)',
+        titleZh: '选词成段（34-48题）',
+        itemsEn: [
+          'Social media, culture sharing, and communication spaces (记录生活, 真实可信, 交流空间)',
+          'Cultural heritage, performing arts, and urban tourism (传承传统文化, 观众, 游览名胜)',
+        ],
+        itemsZh: [
+          '现代社会与文化传播语段（记录生活、分享真实、跨越国界的交流空间）',
+          '文娱与传统艺术评论（继承传统文化、拥有广泛观众、艺术表演形式）',
+        ],
+      },
+      {
+        titleEn: 'Sentence Structures & Conjunctions (Q49-70)',
+        titleZh: '补全语句（49-70题）',
+        itemsEn: [
+          'Time emphatic structures, adverbials, and prepositional frames (是...的, 才, 对...重要)',
+          'Progressive and multi-attribute order (不但...而且..., 站在门口笑的红衣女孩)',
+          'Cultural and social idioms (开开心心, 难以忘记, 浪漫的情感, 游来游去)',
+        ],
+        itemsZh: [
+          '重点句式与副词用法（“是……的”时间强调句、“才”表不容易、“对……重要”）',
+          '多重定语与递进关联结构（递进复句“不但……也……”、定语从句层级）',
+          '文化常识与熟语表达（李白诗歌的浪漫情怀、传统节日的庆祝方式、AABB重叠词）',
+        ],
+      },
+      {
+        titleEn: 'Humanities & Social Reading Comprehension (Q71-80)',
+        titleZh: '阅读理解（71-80题）',
+        itemsEn: [
+          'Workplace interview guidelines and etiquette',
+          'Green economy, environmental consciousness, and shared transit models',
+          'Urban library and public cultural sanctuaries and community cohesion',
+        ],
+        itemsZh: [
+          '职场沟通与面试注意事项（衣着礼貌、诚实回答要领）',
+          '绿色经济发展与现代共享出行生活方式的优势',
+          '城市书房的社会文化价值（提供安静阅读空间、促进城市文化传播）',
+        ],
+      },
+    ],
+  },
   'Professional Chinese': {
     subject: 'Professional Chinese',
     code: 'CSCA-CHIN-2025',
@@ -246,31 +428,31 @@ export const OFFICIAL_SYLLABI: Record<string, SyllabusData> = {
     totalPoints: 100,
     languages: 'Chinese / 简体中文',
     questionType: 'Multiple Choice (Single Answer) / 客观单项选择题',
-    purposeEn: 'Assesses the professional and academic Chinese language competence required for international students pursuing undergraduate majors in China, covering specialized vocabulary, grammar, and academic literature comprehension.',
-    purposeZh: '考查来华留学生进入中国高校学习所必备的专业学术汉语水平，包括基础学术用语、科技/文史专业阅读理解、学术图表分析与学科逻辑推理表达能力。',
+    purposeEn: 'Comprehensive examination covering both Science Chinese (STEM terminology and scientific discourse) and Humanities Chinese (academic literature, social analysis, and cultural expressions).',
+    purposeZh: '全面考查国际学生的专业汉语能力，整合涵盖理科中文（数理化科技术语与实验表达）与文科中文（文化、历史、法律、社科学术语篇）。',
     modules: [
       {
-        titleEn: 'STEM Academic Chinese Terminology',
-        titleZh: '理工专业学术术语与表述',
+        titleEn: 'STEM & Academic Chinese Terminology',
+        titleZh: '专业学术术语与语法规范',
         itemsEn: [
-          'Core mathematical and scientific terminology (equations, ratios, derivatives, chemical elements)',
-          'Interpretation of scientific charts, tables, formulas, and experimental conditions in Chinese',
+          'Science & engineering terms, mathematical representations, chemical names',
+          'Formal connectors and syntactical frameworks for university study',
         ],
         itemsZh: [
-          '基础数理化学术词汇（方程、比例、导数、反应物、生成物、守恒等）',
-          '实验条件、科技图表与数据趋势的规范中文书面表述',
+          '数理化专业术语与符号汉语规范表述',
+          '学术汉语语法句式、把字句、比较句与语体辨析',
         ],
       },
       {
-        titleEn: 'Academic Reading Comprehension',
-        titleZh: '学术文献与科普阅读理解',
+        titleEn: 'Academic & Professional Reading',
+        titleZh: '学术文献与专业阅读理解',
         itemsEn: [
-          'Comprehension of introductory university-level textbook excerpts and scientific papers',
-          'Identification of central thesis, argument structure, and logical connectors in formal texts',
+          'Scientific experiment reports, methodology, laboratory safety',
+          'Humanities and social science academic passages and argumentative essays',
         ],
         itemsZh: [
-          '中国大学通识教科书与学术通俗读物节选阅读理解',
-          '快速抓取文章中心论点、事实论据与段落逻辑关联词（因而、综上所述、由此可见）',
+          '自然科学与工程实验报告及数据分析阅读',
+          '人文社科论文、社会观察与文化评论多篇章综合理解',
         ],
       },
     ],

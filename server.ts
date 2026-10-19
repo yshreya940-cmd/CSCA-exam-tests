@@ -1,3 +1,4 @@
+import http from 'http';
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -215,11 +216,17 @@ Provide a structured, encouraging, and pedagogically sound explanation:
 // Vite middleware in dev or static files in production
 async function startServer() {
   const isProd = process.env.NODE_ENV === 'production';
+  const httpServer = http.createServer(app);
 
   if (!isProd) {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
-      server: { middlewareMode: true, port: PORT },
+      server: {
+        middlewareMode: true,
+        hmr: {
+          server: httpServer,
+        },
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);
@@ -231,7 +238,7 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  httpServer.listen(PORT, '0.0.0.0', () => {
     console.log(`[CSCA Assessment Server] Running on http://0.0.0.0:${PORT}`);
   });
 }

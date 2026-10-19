@@ -1,6 +1,208 @@
 import { Question } from '../types/csca';
+import { CHEM_JAN_2026_QUESTIONS } from './papers/chemJan2026';
+import { MATH_JAN_2026_QUESTIONS } from './papers/mathJan2026';
+import { PHYSICS_JAN_2026_QUESTIONS } from './papers/physicsJan2026';
+import { CHINESE_SCIENCE_2026_QUESTIONS } from './papers/chineseScience2026';
+import { CHINESE_HUMANITIES_2026_QUESTIONS } from './papers/chineseHumanities2026';
+import { MATH_MAR_2026_QUESTIONS } from './papers/mathMar2026';
+import { PHYSICS_MAR_2026_QUESTIONS } from './papers/physicsMar2026';
+import { CHEM_MAR_2026_QUESTIONS } from './papers/chemMar2026';
+import { CHINESE_SCIENCE_MAR_2026_QUESTIONS } from './papers/chineseScienceMar2026';
+import { MATH_APR_2026_QUESTIONS } from './papers/mathApr2026';
+import { PHYSICS_APR_2026_QUESTIONS } from './papers/physicsApr2026';
+import { CHEM_APR_2026_QUESTIONS } from './papers/chemApr2026';
+
+export interface OfficialExamPaperMetadata {
+  id: string;
+  nameEn: string;
+  nameZh: string;
+  subject: string;
+  totalQuestions: number;
+  durationMinutes: number;
+  year: string;
+  sessionMonth: string;
+  examPaperTag: string;
+  descriptionEn: string;
+  descriptionZh: string;
+}
+
+export const OFFICIAL_EXAM_PAPERS: OfficialExamPaperMetadata[] = [
+  // --- January 2026 Session ---
+  {
+    id: 'math-jan-2026',
+    nameEn: 'CSCA Mathematics - January 2026 Official Exam',
+    nameZh: 'CSCA 数学真题（2026年1月全真试卷）',
+    subject: 'Mathematics',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2026',
+    sessionMonth: 'Jan 2026',
+    examPaperTag: 'January 2026 Official Exam',
+    descriptionEn: 'Official 48-question exam covering sets, inequalities, analytical geometry, vectors, and probability.',
+    descriptionZh: '官方48题标准试卷，全真还原集合与不等式、函数解析几何、数列与概率统计。',
+  },
+  {
+    id: 'phys-jan-2026',
+    nameEn: 'CSCA Physics - January 2026 Official Exam',
+    nameZh: 'CSCA 物理真题（2026年1月全真试卷）',
+    subject: 'Physics',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2026',
+    sessionMonth: 'Jan 2026',
+    examPaperTag: 'January 2026 Official Exam',
+    descriptionEn: 'Official 48-question exam covering mechanics, electromagnetism, thermodynamics, and optics.',
+    descriptionZh: '官方48题标准物理试卷，涵盖经典力学、动量与能量守恒、电磁感应与几何光学。',
+  },
+  {
+    id: 'chem-jan-2026',
+    nameEn: 'CSCA Chemistry - January 2026 Official Exam',
+    nameZh: 'CSCA 化学真题（2026年1月全真试卷）',
+    subject: 'Chemistry',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2026',
+    sessionMonth: 'Jan 2026',
+    examPaperTag: 'January 2026 Official Exam',
+    descriptionEn: 'Official 48-question exam covering chemical equilibrium, stoichiometry, redox, and organic chemistry.',
+    descriptionZh: '官方48题标准化学试卷，涵盖摩尔计算、化学平衡、氧化还原、电解质与有机化学。',
+  },
+  {
+    id: 'scichin-jan-2026',
+    nameEn: 'CSCA Science Chinese - January 2026 Official Exam',
+    nameZh: 'CSCA 理科中文真题（2026年1月全真标准卷）',
+    subject: 'Science Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Jan 2026',
+    examPaperTag: 'April 2026 Official Exam',
+    descriptionEn: 'Official 80-question exam covering 6 sections: characters, science terms, cloze, grammar, and scientific reading.',
+    descriptionZh: '官方80题标准试卷，全真考查识解汉字、理科选词填空、语病与比较句、科技阅读理解。',
+  },
+  {
+    id: 'humchin-jan-2026',
+    nameEn: 'CSCA Humanities Chinese - January 2026 Official Exam',
+    nameZh: 'CSCA 文科中文真题（2026年1月全真标准卷）',
+    subject: 'Humanities Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Jan 2026',
+    examPaperTag: 'April 2026 Official Exam',
+    descriptionEn: 'Official 80-question exam covering characters, humanities vocabulary, idioms, grammar, and social reading.',
+    descriptionZh: '官方80题标准试卷，考查人文社科汉语、多重定语、关联复句与社会文化阅读理解。',
+  },
+
+  // --- March 15, 2026 Session ---
+  {
+    id: 'math-mar-2026',
+    nameEn: 'CSCA Mathematics - March 15, 2026 Official Exam',
+    nameZh: 'CSCA 数学真题（2026年3月15日全真试卷）',
+    subject: 'Mathematics',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2026',
+    sessionMonth: 'Mar 2026',
+    examPaperTag: 'March 2026 Official Exam',
+    descriptionEn: 'Authentic 48-question exam covering quadratic inequalities, conic eccentricities, function domains, and vector dot products.',
+    descriptionZh: '官方3月15日全真试卷，涵盖一元二次不等式、椭圆双曲线离心率与渐近线、导数切线斜率与独立事件概率。',
+  },
+  {
+    id: 'phys-mar-2026',
+    nameEn: 'CSCA Physics - March 15, 2026 Official Exam',
+    nameZh: 'CSCA 物理真题（2026年3月15日全真试卷）',
+    subject: 'Physics',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2026',
+    sessionMonth: 'Mar 2026',
+    examPaperTag: 'March 2026 Official Exam',
+    descriptionEn: 'Authentic 48-question exam covering uniform acceleration kinematics, Lorentz circular periods, Snell refraction index, and Bohr transitions.',
+    descriptionZh: '官方3月15日全真试卷，涵盖匀加速第4秒位移、洛伦兹力偏转圆周周期、热力学第一定律与玻尔能级跃迁辐射。',
+  },
+  {
+    id: 'chem-mar-2026',
+    nameEn: 'CSCA Chemistry - March 15, 2026 Official Exam',
+    nameZh: 'CSCA 化学真题（2026年3月15日全真试卷）',
+    subject: 'Chemistry',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2026',
+    sessionMonth: 'Mar 2026',
+    examPaperTag: 'March 2026 Official Exam',
+    descriptionEn: 'Authentic 48-question exam covering STP gas molar volume calculations, Le Chatelier shifts, oxidation numbers, and liquid separation funnels.',
+    descriptionZh: '官方3月15日全真试卷，考查标况气体摩尔体积、化合价代数和、勒夏特列平衡转化率、分液漏斗互不相溶分层分离。',
+  },
+  {
+    id: 'scichin-mar-2026',
+    nameEn: 'CSCA Science Chinese - March 15, 2026 Official Exam',
+    nameZh: 'CSCA 理科中文真题（2026年3月15日全真标准卷）',
+    subject: 'Science Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Mar 2026',
+    examPaperTag: 'March 2026 Official Exam',
+    descriptionEn: 'Authentic 80-question paper across all 6 sections: character phonetics (测量/容量), terminology (溶解/恒定), cohesive cloze, and fume hood safety reading.',
+    descriptionZh: '官方3月15日全真80题卷，涵盖识解汉字（多音字读音/火字旁相变）、选词填空（单一变量恒定）、选词成段与通风橱安全阅读。',
+  },
+
+  // --- April 25, 2026 Session ---
+  {
+    id: 'math-apr-2026',
+    nameEn: 'CSCA Mathematics - April 25, 2026 Official Exam',
+    nameZh: 'CSCA 数学真题（2026年4月25日全真试卷）',
+    subject: 'Mathematics',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2026',
+    sessionMonth: 'Apr 2026',
+    examPaperTag: 'April 2026 Official Exam',
+    descriptionEn: 'Authentic 48-question spring session test covering interval intersections, parity of functions, vector collinearity, and hyperbola asymptotes.',
+    descriptionZh: '官方4月25日全真试卷，涵盖区间交集、奇偶函数判定、向量平行共线条件、双曲线渐近线方程及等比数列通项。',
+  },
+  {
+    id: 'phys-apr-2026',
+    nameEn: 'CSCA Physics - April 25, 2026 Official Exam',
+    nameZh: 'CSCA 物理真题（2026年4月25日全真试卷）',
+    subject: 'Physics',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2026',
+    sessionMonth: 'Apr 2026',
+    examPaperTag: 'April 2026 Official Exam',
+    descriptionEn: 'Authentic 48-question spring session test covering gravitation orbital speed, inelastic momentum collision, and Faraday induced EMF.',
+    descriptionZh: '官方4月25日全真试卷，考查人造卫星第一宇宙环绕速度、非弹性碰撞动量守恒定理、法拉第电磁感应线圈电动势。',
+  },
+  {
+    id: 'chem-apr-2026',
+    nameEn: 'CSCA Chemistry - April 25, 2026 Official Exam',
+    nameZh: 'CSCA 化学真题（2026年4月25日全真试卷）',
+    subject: 'Chemistry',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2026',
+    sessionMonth: 'Apr 2026',
+    examPaperTag: 'April 2026 Official Exam',
+    descriptionEn: 'Authentic 48-question spring session test covering standard solution mass preparation, third-period ionization energies, and ionic equilibria.',
+    descriptionZh: '官方4月25日全真试卷，考查容量瓶配制NaOH溶质质量、第三周期第一电离能反常递增、弱电解质电离常数。',
+  },
+];
 
 export const OFFICIAL_QUESTION_BANK: Question[] = [
+  ...MATH_JAN_2026_QUESTIONS,
+  ...PHYSICS_JAN_2026_QUESTIONS,
+  ...CHEM_JAN_2026_QUESTIONS,
+  ...CHINESE_SCIENCE_2026_QUESTIONS,
+  ...CHINESE_HUMANITIES_2026_QUESTIONS,
+  ...MATH_MAR_2026_QUESTIONS,
+  ...PHYSICS_MAR_2026_QUESTIONS,
+  ...CHEM_MAR_2026_QUESTIONS,
+  ...CHINESE_SCIENCE_MAR_2026_QUESTIONS,
+  ...MATH_APR_2026_QUESTIONS,
+  ...PHYSICS_APR_2026_QUESTIONS,
+  ...CHEM_APR_2026_QUESTIONS,
   // ==================== CHEMISTRY ====================
   {
     id: 'chem-001',
