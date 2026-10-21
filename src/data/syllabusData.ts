@@ -420,8 +420,45 @@ export const OFFICIAL_SYLLABI: Record<string, SyllabusData> = {
       },
     ],
   },
+  'Chinese': {
+    subject: 'Chinese',
+    code: 'CSCA-CHIN-2025',
+    durationMinutes: 90,
+    totalQuestions: 80,
+    totalPoints: 100,
+    languages: 'Chinese / 简体中文',
+    questionType: 'Multiple Choice (Single Answer) / 客观单项选择题',
+    purposeEn: 'Comprehensive examination covering both Science Chinese (STEM terminology and scientific discourse) and Humanities Chinese (academic literature, social analysis, and cultural expressions).',
+    purposeZh: '全面考查国际学生的专业汉语能力，整合涵盖理科中文（数理化科技术语与实验表达）与文科中文（文化、历史、法律、社科学术语篇）。',
+    modules: [
+      {
+        titleEn: 'STEM & Academic Chinese Terminology',
+        titleZh: '专业学术术语与语法规范',
+        itemsEn: [
+          'Science & engineering terms, mathematical representations, chemical names',
+          'Formal connectors and syntactical frameworks for university study',
+        ],
+        itemsZh: [
+          '数理化专业术语与符号汉语规范表述',
+          '学术汉语语法句式、把字句、比较句与语体辨析',
+        ],
+      },
+      {
+        titleEn: 'Academic & Professional Reading',
+        titleZh: '学术文献与专业阅读理解',
+        itemsEn: [
+          'Scientific experiment reports, methodology, laboratory safety',
+          'Humanities and social science academic passages and argumentative essays',
+        ],
+        itemsZh: [
+          '自然科学与工程实验报告及数据分析阅读',
+          '人文社科论文、社会观察与文化评论多篇章综合理解',
+        ],
+      },
+    ],
+  },
   'Professional Chinese': {
-    subject: 'Professional Chinese',
+    subject: 'Chinese',
     code: 'CSCA-CHIN-2025',
     durationMinutes: 90,
     totalQuestions: 80,

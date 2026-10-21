@@ -1,16 +1,38 @@
 import { Question } from '../types/csca';
+import { CHEM_DEC_2025_QUESTIONS } from './papers/chemDec2025';
+import { MATH_DEC_2025_QUESTIONS } from './papers/mathDec2025';
+import { PHYSICS_DEC_2025_QUESTIONS } from './papers/physicsDec2025';
+import { CHINESE_SCIENCE_DEC_2025_QUESTIONS } from './papers/chineseScienceDec2025';
+import { CHINESE_HUMANITIES_DEC_2025_QUESTIONS } from './papers/chineseHumanitiesDec2025';
+
 import { CHEM_JAN_2026_QUESTIONS } from './papers/chemJan2026';
 import { MATH_JAN_2026_QUESTIONS } from './papers/mathJan2026';
 import { PHYSICS_JAN_2026_QUESTIONS } from './papers/physicsJan2026';
 import { CHINESE_SCIENCE_2026_QUESTIONS } from './papers/chineseScience2026';
 import { CHINESE_HUMANITIES_2026_QUESTIONS } from './papers/chineseHumanities2026';
+
 import { MATH_MAR_2026_QUESTIONS } from './papers/mathMar2026';
 import { PHYSICS_MAR_2026_QUESTIONS } from './papers/physicsMar2026';
 import { CHEM_MAR_2026_QUESTIONS } from './papers/chemMar2026';
 import { CHINESE_SCIENCE_MAR_2026_QUESTIONS } from './papers/chineseScienceMar2026';
+import { CHINESE_HUMANITIES_MAR_2026_QUESTIONS } from './papers/chineseHumanitiesMar2026';
+
 import { MATH_APR_2026_QUESTIONS } from './papers/mathApr2026';
 import { PHYSICS_APR_2026_QUESTIONS } from './papers/physicsApr2026';
 import { CHEM_APR_2026_QUESTIONS } from './papers/chemApr2026';
+import { CHINESE_SCIENCE_APR_2026_QUESTIONS } from './papers/chineseScienceApr2026';
+import { CHINESE_HUMANITIES_APR_2026_QUESTIONS } from './papers/chineseHumanitiesApr2026';
+
+import {
+  MOCK_CHINESE_SCIENCE_SET1_QUESTIONS,
+  MOCK_CHINESE_SCIENCE_SET2_QUESTIONS,
+  MOCK_CHINESE_SCIENCE_SET3_QUESTIONS,
+} from './papers/mockChineseScience';
+import {
+  MOCK_CHINESE_HUMANITIES_SET1_QUESTIONS,
+  MOCK_CHINESE_HUMANITIES_SET2_QUESTIONS,
+  MOCK_CHINESE_HUMANITIES_SET3_QUESTIONS,
+} from './papers/mockChineseHumanities';
 
 export interface OfficialExamPaperMetadata {
   id: string;
@@ -24,10 +46,80 @@ export interface OfficialExamPaperMetadata {
   examPaperTag: string;
   descriptionEn: string;
   descriptionZh: string;
+  isMock?: boolean;
+  mockSetIndex?: number;
+  track?: 'Science' | 'Humanities';
 }
 
 export const OFFICIAL_EXAM_PAPERS: OfficialExamPaperMetadata[] = [
-  // --- January 2026 Session ---
+  // ==================== December 2025 Session (5 Papers) ====================
+  {
+    id: 'math-dec-2025',
+    nameEn: 'CSCA Mathematics - December 2025 Official Exam',
+    nameZh: 'CSCA 数学真题（2025年12月全真试卷）',
+    subject: 'Mathematics',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2025',
+    sessionMonth: 'Dec 2025',
+    examPaperTag: 'December 2025 Official Exam',
+    descriptionEn: 'Official 48-question winter paper covering sets, logarithmic domain, arithmetic progression, and plane vector inner products.',
+    descriptionZh: '官方48题冬季全真标准卷，考查正整数集、对数函数定义域、等差数列通项求和、平面向量数量积及空间线面平行。',
+  },
+  {
+    id: 'phys-dec-2025',
+    nameEn: 'CSCA Physics - December 2025 Official Exam',
+    nameZh: 'CSCA 物理真题（2025年12月全真试卷）',
+    subject: 'Physics',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2025',
+    sessionMonth: 'Dec 2025',
+    examPaperTag: 'December 2025 Official Exam',
+    descriptionEn: 'Official 48-question winter paper covering gravitational potential energy, Ampère magnetic force, and ideal gas state equation.',
+    descriptionZh: '官方48题冬季全真试卷，涵盖重力做功与机械能守恒、通电导线安培力方向判断、理想气体状态方程与光电效应方程。',
+  },
+  {
+    id: 'chem-dec-2025',
+    nameEn: 'CSCA Chemistry - December 2025 Official Exam',
+    nameZh: 'CSCA 化学真题（2025年12月全真试卷）',
+    subject: 'Chemistry',
+    totalQuestions: 48,
+    durationMinutes: 60,
+    year: '2025',
+    sessionMonth: 'Dec 2025',
+    examPaperTag: 'December 2025 Official Exam',
+    descriptionEn: 'Official 48-question winter paper covering Avogadro constant NA calculations, galvanic cell electrochemistry, and ionic precipitation equilibrium.',
+    descriptionZh: '官方48题冬季全真试卷，涵盖阿伏加德罗常数NA、原电池正负极电极反应式、难溶电解质沉淀溶解平衡溶度积Ksp。',
+  },
+  {
+    id: 'scichin-dec-2025',
+    nameEn: 'CSCA Science Chinese - December 2025 Official Exam',
+    nameZh: 'CSCA 理科中文真题（2025年12月全真标准卷）',
+    subject: 'Science Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2025',
+    sessionMonth: 'Dec 2025',
+    examPaperTag: 'December 2025 Official Exam',
+    descriptionEn: 'Official 80-question paper covering polyphonic scientific characters, laboratory safety terms, cohesive cloze, and scientific reading.',
+    descriptionZh: '官方80题标准试卷，全真考查科技多音字、化学实验操作术语辨识、因果转折复句与空间科学论文阅读。',
+  },
+  {
+    id: 'humchin-dec-2025',
+    nameEn: 'CSCA Humanities Chinese - December 2025 Official Exam',
+    nameZh: 'CSCA 文科中文真题（2025年12月全真标准卷）',
+    subject: 'Humanities Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2025',
+    sessionMonth: 'Dec 2025',
+    examPaperTag: 'December 2025 Official Exam',
+    descriptionEn: 'Official 80-question paper covering historical polyphonic characters, academic idioms, multifold modifiers, and cultural heritage reading.',
+    descriptionZh: '官方80题标准试卷，考查文史社科典故、典雅成语辨析、多重复句逻辑关系及传统非物质文化遗产学术评论。',
+  },
+
+  // ==================== January 2026 Session (5 Papers) ====================
   {
     id: 'math-jan-2026',
     nameEn: 'CSCA Mathematics - January 2026 Official Exam',
@@ -76,7 +168,7 @@ export const OFFICIAL_EXAM_PAPERS: OfficialExamPaperMetadata[] = [
     durationMinutes: 90,
     year: '2026',
     sessionMonth: 'Jan 2026',
-    examPaperTag: 'April 2026 Official Exam',
+    examPaperTag: 'January 2026 Official Exam',
     descriptionEn: 'Official 80-question exam covering 6 sections: characters, science terms, cloze, grammar, and scientific reading.',
     descriptionZh: '官方80题标准试卷，全真考查识解汉字、理科选词填空、语病与比较句、科技阅读理解。',
   },
@@ -89,12 +181,12 @@ export const OFFICIAL_EXAM_PAPERS: OfficialExamPaperMetadata[] = [
     durationMinutes: 90,
     year: '2026',
     sessionMonth: 'Jan 2026',
-    examPaperTag: 'April 2026 Official Exam',
+    examPaperTag: 'January 2026 Official Exam',
     descriptionEn: 'Official 80-question exam covering characters, humanities vocabulary, idioms, grammar, and social reading.',
     descriptionZh: '官方80题标准试卷，考查人文社科汉语、多重定语、关联复句与社会文化阅读理解。',
   },
 
-  // --- March 15, 2026 Session ---
+  // ==================== March 15, 2026 Session (5 Papers) ====================
   {
     id: 'math-mar-2026',
     nameEn: 'CSCA Mathematics - March 15, 2026 Official Exam',
@@ -147,8 +239,21 @@ export const OFFICIAL_EXAM_PAPERS: OfficialExamPaperMetadata[] = [
     descriptionEn: 'Authentic 80-question paper across all 6 sections: character phonetics (测量/容量), terminology (溶解/恒定), cohesive cloze, and fume hood safety reading.',
     descriptionZh: '官方3月15日全真80题卷，涵盖识解汉字（多音字读音/火字旁相变）、选词填空（单一变量恒定）、选词成段与通风橱安全阅读。',
   },
+  {
+    id: 'humchin-mar-2026',
+    nameEn: 'CSCA Humanities Chinese - March 15, 2026 Official Exam',
+    nameZh: 'CSCA 文科中文真题（2026年3月15日全真标准卷）',
+    subject: 'Humanities Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Mar 2026',
+    examPaperTag: 'March 2026 Official Exam',
+    descriptionEn: 'Authentic 80-question paper across all 6 sections: historical phonetics (行文/重大), historiography terms, cultural cloze, and documentary analysis.',
+    descriptionZh: '官方3月15日全真80题文科卷，涵盖历史文献识解汉字（行文/重大）、典故选词填空、语病甄别与学术文史评论深度阅读。',
+  },
 
-  // --- April 25, 2026 Session ---
+  // ==================== April 25, 2026 Session (5 Papers) ====================
   {
     id: 'math-apr-2026',
     nameEn: 'CSCA Mathematics - April 25, 2026 Official Exam',
@@ -188,21 +293,175 @@ export const OFFICIAL_EXAM_PAPERS: OfficialExamPaperMetadata[] = [
     descriptionEn: 'Authentic 48-question spring session test covering standard solution mass preparation, third-period ionization energies, and ionic equilibria.',
     descriptionZh: '官方4月25日全真试卷，考查容量瓶配制NaOH溶质质量、第三周期第一电离能反常递增、弱电解质电离常数。',
   },
+  {
+    id: 'scichin-apr-2026',
+    nameEn: 'CSCA Science Chinese - April 25, 2026 Official Exam',
+    nameZh: 'CSCA 理科中文真题（2026年4月25日全真标准卷）',
+    subject: 'Science Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Apr 2026',
+    examPaperTag: 'April 2026 Official Exam',
+    descriptionEn: 'Authentic 80-question spring exam covering polyphonic science phonetics (盛放), terminology, conditional connectives, and frontier research reading.',
+    descriptionZh: '官方4月25日全真80题卷，考查理科多音字（盛放chéng）、科学量纲偏旁、实验步骤语序、因果复句及前沿科技文献精读。',
+  },
+  {
+    id: 'humchin-apr-2026',
+    nameEn: 'CSCA Humanities Chinese - April 25, 2026 Official Exam',
+    nameZh: 'CSCA 文科中文真题（2026年4月25日全真标准卷）',
+    subject: 'Humanities Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Apr 2026',
+    examPaperTag: 'April 2026 Official Exam',
+    descriptionEn: 'Authentic 80-question spring exam covering humanities phonetics (便函biàn), classical idioms, multifold attribute clauses, and societal reading.',
+    descriptionZh: '官方4月25日全真80题文科卷，考查文史社科汉字（便函biàn）、典雅成语语境、多重复杂句式及丝绸之路历史考古文献深度阅读。',
+  },
+];
+
+// ==================== 3 Complete Mock Exam Sets for Sciences & Humanities Tracks ====================
+export const OFFICIAL_MOCK_EXAM_PAPERS: OfficialExamPaperMetadata[] = [
+  // --- Sciences Track (Chinese) 3 Sets ---
+  {
+    id: 'scichin-mock-set1',
+    nameEn: 'CSCA Science Chinese - Official Mock Exam Set 1',
+    nameZh: 'CSCA 理科中文全真模拟试卷（第一套冲刺模考）',
+    subject: 'Science Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Mock Set 1',
+    examPaperTag: 'Mock Exam Set 1 (Science Chinese)',
+    descriptionEn: 'Full 80-question standard mock exam modeled after CSC CSCA guidelines, covering all 6 syllabus modules.',
+    descriptionZh: '严格参照国家留学基金委CSCA理科中文大纲命制，完整80题全真模拟试卷，含汉字、术语、复句与科技学术阅读。',
+    isMock: true,
+    mockSetIndex: 1,
+    track: 'Science',
+  },
+  {
+    id: 'scichin-mock-set2',
+    nameEn: 'CSCA Science Chinese - Official Mock Exam Set 2',
+    nameZh: 'CSCA 理科中文全真模拟试卷（第二套冲刺模考）',
+    subject: 'Science Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Mock Set 2',
+    examPaperTag: 'Mock Exam Set 2 (Science Chinese)',
+    descriptionEn: 'Full 80-question standard mock exam focusing on laboratory operations, physical concepts, and experimental logic.',
+    descriptionZh: '第二套80题标准模拟卷，侧重实验室仪器规范、理化实验逻辑推理、同义术语辨析与常压超导科技前沿阅读。',
+    isMock: true,
+    mockSetIndex: 2,
+    track: 'Science',
+  },
+  {
+    id: 'scichin-mock-set3',
+    nameEn: 'CSCA Science Chinese - Official Mock Exam Set 3',
+    nameZh: 'CSCA 理科中文全真模拟试卷（第三套冲刺模考）',
+    subject: 'Science Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Mock Set 3',
+    examPaperTag: 'Mock Exam Set 3 (Science Chinese)',
+    descriptionEn: 'Full 80-question standard mock exam testing advanced mathematical models, chemical stoichiometry, and academic reporting.',
+    descriptionZh: '第三套80题标准模拟卷，聚焦数理模型阐释、反应平衡充分必要条件、语病排查及纳米材料高能电解水学术文献精读。',
+    isMock: true,
+    mockSetIndex: 3,
+    track: 'Science',
+  },
+
+  // --- Humanities Track (Chinese) 3 Sets ---
+  {
+    id: 'humchin-mock-set1',
+    nameEn: 'CSCA Humanities Chinese - Official Mock Exam Set 1',
+    nameZh: 'CSCA 文科中文全真模拟试卷（第一套冲刺模考）',
+    subject: 'Humanities Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Mock Set 1',
+    examPaperTag: 'Mock Exam Set 1 (Humanities Chinese)',
+    descriptionEn: 'Full 80-question standard mock exam modeled after CSC CSCA guidelines for humanities and social sciences.',
+    descriptionZh: '严格依据CSCA文科中文考试大纲命制，80题全真标准卷，涵盖文史典籍多音字、经典成语褒贬、论说文语序与文化书评。',
+    isMock: true,
+    mockSetIndex: 1,
+    track: 'Humanities',
+  },
+  {
+    id: 'humchin-mock-set2',
+    nameEn: 'CSCA Humanities Chinese - Official Mock Exam Set 2',
+    nameZh: 'CSCA 文科中文全真模拟试卷（第二套冲刺模考）',
+    subject: 'Humanities Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Mock Set 2',
+    examPaperTag: 'Mock Exam Set 2 (Humanities Chinese)',
+    descriptionEn: 'Full 80-question standard mock exam focusing on ancient historiography, philosophical discourse, and cultural anthropology.',
+    descriptionZh: '第二套80题文科冲刺卷，深入考查史学纪传体考据、先秦儒家人文思想、多层定语结构病句与非物质文化遗产保护论文。',
+    isMock: true,
+    mockSetIndex: 2,
+    track: 'Humanities',
+  },
+  {
+    id: 'humchin-mock-set3',
+    nameEn: 'CSCA Humanities Chinese - Official Mock Exam Set 3',
+    nameZh: 'CSCA 文科中文全真模拟试卷（第三套冲刺模考）',
+    subject: 'Humanities Chinese',
+    totalQuestions: 80,
+    durationMinutes: 90,
+    year: '2026',
+    sessionMonth: 'Mock Set 3',
+    examPaperTag: 'Mock Exam Set 3 (Humanities Chinese)',
+    descriptionEn: 'Full 80-question standard mock exam testing modern societal critiques, linguistic stylistics, and civilization dialogue.',
+    descriptionZh: '第三套80题文科冲刺卷，重点突破文明交流互鉴理论、经典典故活化、复杂递进复句辨析与跨区域全球文化史学术阅读。',
+    isMock: true,
+    mockSetIndex: 3,
+    track: 'Humanities',
+  },
 ];
 
 export const OFFICIAL_QUESTION_BANK: Question[] = [
+  // --- December 2025 (5 Papers) ---
+  ...MATH_DEC_2025_QUESTIONS,
+  ...PHYSICS_DEC_2025_QUESTIONS,
+  ...CHEM_DEC_2025_QUESTIONS,
+  ...CHINESE_SCIENCE_DEC_2025_QUESTIONS,
+  ...CHINESE_HUMANITIES_DEC_2025_QUESTIONS,
+
+  // --- January 2026 (5 Papers) ---
   ...MATH_JAN_2026_QUESTIONS,
   ...PHYSICS_JAN_2026_QUESTIONS,
   ...CHEM_JAN_2026_QUESTIONS,
   ...CHINESE_SCIENCE_2026_QUESTIONS,
   ...CHINESE_HUMANITIES_2026_QUESTIONS,
+
+  // --- March 15, 2026 (5 Papers) ---
   ...MATH_MAR_2026_QUESTIONS,
   ...PHYSICS_MAR_2026_QUESTIONS,
   ...CHEM_MAR_2026_QUESTIONS,
   ...CHINESE_SCIENCE_MAR_2026_QUESTIONS,
+  ...CHINESE_HUMANITIES_MAR_2026_QUESTIONS,
+
+  // --- April 25, 2026 (5 Papers) ---
   ...MATH_APR_2026_QUESTIONS,
   ...PHYSICS_APR_2026_QUESTIONS,
   ...CHEM_APR_2026_QUESTIONS,
+  ...CHINESE_SCIENCE_APR_2026_QUESTIONS,
+  ...CHINESE_HUMANITIES_APR_2026_QUESTIONS,
+
+  // --- 3 Complete Mock Sets for Sciences Chinese (3 x 80 = 240 Questions) ---
+  ...MOCK_CHINESE_SCIENCE_SET1_QUESTIONS,
+  ...MOCK_CHINESE_SCIENCE_SET2_QUESTIONS,
+  ...MOCK_CHINESE_SCIENCE_SET3_QUESTIONS,
+
+  // --- 3 Complete Mock Sets for Humanities Chinese (3 x 80 = 240 Questions) ---
+  ...MOCK_CHINESE_HUMANITIES_SET1_QUESTIONS,
+  ...MOCK_CHINESE_HUMANITIES_SET2_QUESTIONS,
+  ...MOCK_CHINESE_HUMANITIES_SET3_QUESTIONS,
   // ==================== CHEMISTRY ====================
   {
     id: 'chem-001',

@@ -1,6 +1,6 @@
-# CSCA Exam Practice & Progress Tracking System (中国学术水平能力测试)
+# CSCA by Apply for China · CSCA Exam Practice & Progress System (中国学术水平能力测试)
 
-An official-style computer-based testing (CBT) practice portal, full-length timed mock examinations, syllabus explorer, AI question generator, mistake notebook, and progress tracking system for the **China Scholastic Competency Assessment (CSCA)** administered under the auspices of the **China Scholarship Council (CSC)**.
+An official-style computer-based testing (CBT) practice portal, full-length timed mock examinations, syllabus explorer, AI question generator, mistake notebook, and progress tracking system for the **China Scholastic Competency Assessment (CSCA)** administered under the auspices of the **China Scholarship Council (CSC)**, provided by **CSCA by Apply for China** with a clean pastel green aesthetic and authentic exam experience.
 
 ---
 

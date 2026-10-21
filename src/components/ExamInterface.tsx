@@ -205,13 +205,21 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center space-x-3">
             <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-blue-600 text-white">
-              {session.mode === 'mock' ? (isZh ? '全真模考' : 'Official Mock') : (isZh ? '考点练习' : 'Practice Drill')}
+              {session.mode === 'mock' || session.mode === 'past_paper' 
+                ? (isZh ? '全真真题考试' : 'Official Real Exam') 
+                : (isZh ? '考点练习' : 'Practice Drill')}
             </span>
-            <div className="text-sm font-bold text-slate-100">
-              {session.subject} {session.moduleTitle && `· ${session.moduleTitle}`}
+            <div className="text-sm font-bold text-slate-100 flex items-center gap-2">
+              <span>{session.subject}</span>
+              {session.examPaper && (
+                <span className="text-xs text-blue-300 font-semibold px-2 py-0.5 rounded bg-blue-900/60 border border-blue-700/60 max-w-[280px] sm:max-w-md truncate">
+                  {session.examPaper}
+                </span>
+              )}
+              {session.moduleTitle && !session.examPaper && <span>· {session.moduleTitle}</span>}
             </div>
-            <span className="text-xs text-slate-400 font-mono hidden sm:inline">
-              [{currentIndex + 1} / {session.questions.length}]
+            <span className="text-xs text-slate-300 font-mono hidden sm:inline">
+              [第 {currentQ.questionNumber || currentIndex + 1} 题 / 共 {session.questions.length} 题]
             </span>
           </div>
 
@@ -278,8 +286,8 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
               {/* Question Metadata Bar */}
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
                 <div className="flex items-center space-x-2">
-                  <span className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-xs">
-                    {currentIndex + 1}
+                  <span className="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-xs font-mono">
+                    {isZh ? `第 ${currentQ.questionNumber || currentIndex + 1} 题` : `Q${currentQ.questionNumber || currentIndex + 1}`}
                   </span>
                   <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                     {currentQ.module}
@@ -533,7 +541,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                         isCurrent ? 'ring-2 ring-slate-900 ring-offset-2 scale-105' : ''
                       }`}
                     >
-                      {qIdx + 1}
+                      {session.questions[qIdx]?.questionNumber || qIdx + 1}
                       {isQFlagged && (
                         <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-rose-500"></span>
                       )}

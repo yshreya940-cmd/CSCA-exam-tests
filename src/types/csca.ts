@@ -2,6 +2,7 @@ export type Subject =
   | 'Mathematics' 
   | 'Physics' 
   | 'Chemistry' 
+  | 'Chinese'
   | 'Science Chinese' 
   | 'Humanities Chinese'
   | 'Professional Chinese';
@@ -36,6 +37,7 @@ export interface QuizSession {
   subject: Subject | 'All';
   moduleTitle?: string;
   examPaper?: string;
+  paperId?: string;
   totalQuestions: number;
   timeLimitSeconds: number; // 3600 for 60 min, 5400 for 90 min, 0 for untimed
   timeSpentSeconds: number;

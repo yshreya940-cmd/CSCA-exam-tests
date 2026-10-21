@@ -25,19 +25,19 @@ export const CscaLogo: React.FC<CscaLogoProps> = ({ className = '', size = 'md' 
           </linearGradient>
 
           <linearGradient id="cscaSwirlA" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#67e8f9" />
-            <stop offset="100%" stopColor="#3b82f6" />
+            <stop offset="0%" stopColor="#93c5fd" />
+            <stop offset="100%" stopColor="#2563eb" />
           </linearGradient>
 
           <linearGradient id="cscaSwirlB" x1="100%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="#a855f7" />
-            <stop offset="50%" stopColor="#6366f1" />
-            <stop offset="100%" stopColor="#38bdf8" />
+            <stop offset="0%" stopColor="#60a5fa" />
+            <stop offset="50%" stopColor="#1e40af" />
+            <stop offset="100%" stopColor="#3b82f6" />
           </linearGradient>
 
           <linearGradient id="cscaGoldAccent" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#fef08a" />
-            <stop offset="100%" stopColor="#f59e0b" />
+            <stop offset="100%" stopColor="#eab308" />
           </linearGradient>
         </defs>
 
