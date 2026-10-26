@@ -108,9 +108,21 @@ export async function resetUserPassword(email: string): Promise<void> {
   await sendPasswordResetEmail(auth, email.trim());
 }
 
-export async function loginWithGoogle(): Promise<FirebaseUser> {
-  const cred = await signInWithPopup(auth, googleProvider);
-  return cred.user;
+export async function loginWithGoogle(): Promise<FirebaseUser | null> {
+  try {
+    const cred = await signInWithPopup(auth, googleProvider);
+    return cred.user;
+  } catch (err: any) {
+    if (
+      err?.code === 'auth/popup-closed-by-user' ||
+      err?.code === 'auth/cancelled-popup-request' ||
+      err?.message?.includes('popup-closed-by-user')
+    ) {
+      // User dismissed or closed the popup - normal cancellation
+      return null;
+    }
+    throw err;
+  }
 }
 
 export async function logoutUser(): Promise<void> {

@@ -18,16 +18,19 @@ const PORT = Number(process.env.PORT) || 3000;
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Server-side Gemini Client
-const apiKey = process.env.GEMINI_API_KEY || '';
-const ai = new GoogleGenAI({
-  apiKey,
-  httpOptions: {
-    headers: {
-      'User-Agent': 'aistudio-build',
+// Dynamic Server-side Gemini Client helper
+function getGeminiClient(): GoogleGenAI {
+  dotenv.config();
+  const currentKey = process.env.GEMINI_API_KEY || '';
+  return new GoogleGenAI({
+    apiKey: currentKey,
+    httpOptions: {
+      headers: {
+        'User-Agent': 'aistudio-build',
+      },
     },
-  },
-});
+  });
+}
 
 // Resilient Model Fallback Ladder
 const MODEL_FALLBACK_LADDER = [
@@ -46,6 +49,13 @@ interface FallbackOptions {
  * Standard helper implementing resilient model fallback ladder
  */
 async function generateContentWithFallback(options: FallbackOptions) {
+  dotenv.config();
+  const key = process.env.GEMINI_API_KEY;
+  if (!key || !key.trim()) {
+    throw new Error('GEMINI_API_KEY is not configured. Please add your key to the .env file in the project root.');
+  }
+
+  const ai = getGeminiClient();
   let lastError: any = null;
 
   for (const model of MODEL_FALLBACK_LADDER) {
@@ -76,7 +86,7 @@ app.get('/api/health', (_req: Request, res: Response) => {
   res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    hasApiKey: Boolean(apiKey),
+    hasApiKey: Boolean(process.env.GEMINI_API_KEY),
   });
 });
 

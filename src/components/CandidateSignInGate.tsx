@@ -92,6 +92,10 @@ export const CandidateSignInGate: React.FC<CandidateSignInGateProps> = ({
     setLoading(true);
     try {
       const user = await loginWithGoogle();
+      if (!user) {
+        // User closed or dismissed Google popup
+        return;
+      }
       await syncUserProfileToFirestore(user.uid, {
         ...userProgress,
         candidateEmail: user.email || '',
@@ -100,9 +104,12 @@ export const CandidateSignInGate: React.FC<CandidateSignInGateProps> = ({
       setSuccessMsg(isZh ? 'Google 账号验证成功！正在进入考场主页...' : 'Signed in with Google! Entering portal...');
       setTimeout(() => onUserLogin(user), 500);
     } catch (err: any) {
-      console.error('Google auth error:', err);
-      if (err.code !== 'auth/popup-closed-by-user') {
-        setErrorMsg(err.message || 'Google Sign-in failed.');
+      if (err.code === 'auth/popup-blocked') {
+        setErrorMsg(isZh ? '弹出窗口被浏览器拦截，请允许弹出窗口或使用邮箱登录。' : 'Popup blocked by browser. Please allow popups or use email sign in.');
+      } else if (err.code === 'auth/unauthorized-domain') {
+        setErrorMsg(isZh ? '当前域名未配置在授权列表中，请使用上方邮箱密码直接登录。' : 'Domain not authorized in Firebase. Please sign in with email and password above.');
+      } else if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+        setErrorMsg(err.message || 'Google Sign-in failed. Please use email sign in.');
       }
     } finally {
       setLoading(false);

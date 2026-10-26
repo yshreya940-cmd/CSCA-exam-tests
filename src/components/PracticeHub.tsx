@@ -112,7 +112,6 @@ export const PracticeHub: React.FC<PracticeHubProps> = ({
       setSuccessMsg(isZh ? '登录成功！已载入个人专属档案与错题本。' : 'Signed in! Loaded your personal notebook.');
       setPassword('');
     } catch (err: any) {
-      console.error('Front page auth error:', err);
       let msg = err.message || 'Authentication failed.';
       if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
         msg = isZh ? '邮箱或密码不正确，请重新输入。' : 'Invalid email or password.';
@@ -120,6 +119,8 @@ export const PracticeHub: React.FC<PracticeHubProps> = ({
         msg = isZh ? '密码强度过低，请输入至少 6 个字符。' : 'Weak password. Use at least 6 characters.';
       } else if (err.code === 'auth/invalid-email') {
         msg = isZh ? '请输入有效的邮箱地址。' : 'Invalid email format.';
+      } else if (err.code === 'auth/operation-not-allowed') {
+        msg = isZh ? '邮箱登录服务未启用，请使用下方 Google 快速登录。' : 'Email sign-in is not enabled. Please sign in with Google below.';
       }
       setErrorMsg(msg);
     } finally {
@@ -132,6 +133,10 @@ export const PracticeHub: React.FC<PracticeHubProps> = ({
     setLoading(true);
     try {
       const user = await loginWithGoogle();
+      if (!user) {
+        // User closed or dismissed Google popup window
+        return;
+      }
       if (onUserLogin) {
         onUserLogin(user);
       }
@@ -142,9 +147,12 @@ export const PracticeHub: React.FC<PracticeHubProps> = ({
       });
       setSuccessMsg(isZh ? 'Google 账号验证成功！' : 'Signed in with Google!');
     } catch (err: any) {
-      console.error('Google auth error:', err);
-      if (err.code !== 'auth/popup-closed-by-user') {
-        setErrorMsg(err.message || 'Google Sign-in failed.');
+      if (err.code === 'auth/popup-blocked') {
+        setErrorMsg(isZh ? '弹出窗口被浏览器拦截，请允许弹出窗口或使用邮箱登录。' : 'Popup blocked by browser. Please allow popups or use email sign in.');
+      } else if (err.code === 'auth/unauthorized-domain') {
+        setErrorMsg(isZh ? '当前域名未配置在授权列表中，请使用上方邮箱密码直接登录。' : 'Domain not authorized in Firebase. Please sign in with email and password above.');
+      } else if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+        setErrorMsg(err.message || 'Google Sign-in failed. Please use email sign in.');
       }
     } finally {
       setLoading(false);
