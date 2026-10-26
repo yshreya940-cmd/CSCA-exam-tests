@@ -13,12 +13,15 @@ import {
 } from 'lucide-react';
 import { UserProgress, Language, Subject, MistakeRecord, Question } from '../types/csca';
 import { saveUserProgress } from '../utils/storage';
+import { saveMistakeToFirestore, deleteMistakeFromFirestore } from '../lib/firebase';
+import { User as FirebaseUser } from 'firebase/auth';
 
 interface MistakeNotebookProps {
   userProgress: UserProgress;
   lang: Language;
   onUpdateProgress: (progress: UserProgress) => void;
   onLaunchMistakeQuiz: (questions: Question[]) => void;
+  currentUser?: FirebaseUser | null;
 }
 
 export const MistakeNotebook: React.FC<MistakeNotebookProps> = ({
@@ -26,6 +29,7 @@ export const MistakeNotebook: React.FC<MistakeNotebookProps> = ({
   lang,
   onUpdateProgress,
   onLaunchMistakeQuiz,
+  currentUser,
 }) => {
   const isZh = lang === 'zh';
   const [subjectFilter, setSubjectFilter] = useState<Subject | 'All'>('All');
@@ -42,30 +46,49 @@ export const MistakeNotebook: React.FC<MistakeNotebookProps> = ({
 
   const activeMistakes = userProgress.mistakeBook.filter((m) => !m.resolved);
 
-  const handleToggleResolve = (questionId: string) => {
+  const handleToggleResolve = async (questionId: string) => {
+    let toggledRecord: MistakeRecord | undefined;
     const updated = userProgress.mistakeBook.map((m) => {
       if (m.questionId === questionId) {
-        return { ...m, resolved: !m.resolved };
+        toggledRecord = { ...m, resolved: !m.resolved };
+        return toggledRecord;
       }
       return m;
     });
     const newProgress = { ...userProgress, mistakeBook: updated };
-    saveUserProgress(newProgress);
+    saveUserProgress(newProgress, currentUser?.uid);
     onUpdateProgress(newProgress);
+
+    // Sync to user's private Firestore subcollection
+    if (currentUser && toggledRecord) {
+      await saveMistakeToFirestore(currentUser.uid, toggledRecord);
+    }
   };
 
-  const handleDeleteMistake = (questionId: string) => {
+  const handleDeleteMistake = async (questionId: string) => {
     const updated = userProgress.mistakeBook.filter((m) => m.questionId !== questionId);
     const newProgress = { ...userProgress, mistakeBook: updated };
-    saveUserProgress(newProgress);
+    saveUserProgress(newProgress, currentUser?.uid);
     onUpdateProgress(newProgress);
+
+    // Delete from user's private Firestore subcollection
+    if (currentUser) {
+      await deleteMistakeFromFirestore(currentUser.uid, questionId);
+    }
   };
 
-  const handleClearResolved = () => {
+  const handleClearResolved = async () => {
+    const resolvedMistakes = userProgress.mistakeBook.filter((m) => m.resolved);
     const updated = userProgress.mistakeBook.filter((m) => !m.resolved);
     const newProgress = { ...userProgress, mistakeBook: updated };
-    saveUserProgress(newProgress);
+    saveUserProgress(newProgress, currentUser?.uid);
     onUpdateProgress(newProgress);
+
+    if (currentUser) {
+      for (const m of resolvedMistakes) {
+        await deleteMistakeFromFirestore(currentUser.uid, m.questionId);
+      }
+    }
   };
 
   return (
@@ -147,7 +170,7 @@ export const MistakeNotebook: React.FC<MistakeNotebookProps> = ({
       {/* Mistakes List */}
       {filteredMistakes.length === 0 ? (
         <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 shadow-sm space-y-3">
-          <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+          <div className="w-12 h-12 rounded-full bg-blue-100 text-[#0056D2] flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-6 h-6" />
           </div>
           <h3 className="font-bold text-slate-900 text-base">
@@ -170,14 +193,14 @@ export const MistakeNotebook: React.FC<MistakeNotebookProps> = ({
               <div
                 key={record.questionId}
                 className={`bg-white rounded-2xl border p-6 shadow-xs space-y-4 transition-all ${
-                  isResolved ? 'border-emerald-200 bg-emerald-50/20' : 'border-rose-200'
+                  isResolved ? 'border-blue-200 bg-blue-50/20' : 'border-rose-200'
                 }`}
               >
                 {/* Header */}
                 <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                   <div className="flex items-center space-x-2.5">
                     <span className={`px-2 py-0.5 rounded text-xs font-bold ${
-                      isResolved ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                      isResolved ? 'bg-blue-100 text-[#0056D2]' : 'bg-rose-100 text-rose-800'
                     }`}>
                       {q.subject}
                     </span>
@@ -193,7 +216,7 @@ export const MistakeNotebook: React.FC<MistakeNotebookProps> = ({
                       onClick={() => handleToggleResolve(record.questionId)}
                       className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition-colors ${
                         isResolved
-                          ? 'bg-emerald-600 text-white'
+                          ? 'bg-[#0056D2] text-white'
                           : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                       }`}
                     >
@@ -239,7 +262,7 @@ export const MistakeNotebook: React.FC<MistakeNotebookProps> = ({
 
                     let optBg = 'bg-slate-50 border-slate-200 text-slate-700';
                     if (isOfficialCorrect) {
-                      optBg = 'bg-emerald-50 border-emerald-400 text-emerald-950 font-semibold ring-1 ring-emerald-400';
+                      optBg = 'bg-blue-50/80 border-[#0056D2] text-blue-950 font-semibold ring-1 ring-blue-300';
                     } else if (isCandidateChoice) {
                       optBg = 'bg-rose-50 border-rose-300 text-rose-950 font-medium';
                     }
@@ -260,7 +283,7 @@ export const MistakeNotebook: React.FC<MistakeNotebookProps> = ({
                             </span>
                           )}
                           {isOfficialCorrect && (
-                            <span className="inline-block mt-1 text-[10px] font-bold text-emerald-700">
+                            <span className="inline-block mt-1 text-[10px] font-bold text-[#0056D2]">
                               {isZh ? '✓ 官方标准答案' : '✓ Official Answer'}
                             </span>
                           )}

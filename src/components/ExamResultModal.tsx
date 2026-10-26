@@ -53,7 +53,7 @@ export const ExamResultModal: React.FC<ExamResultModalProps> = ({
     tier = {
       titleEn: 'CSC High Distinction (Top Percentile)',
       titleZh: 'CSC 卓越竞争水平 (极高通过率)',
-      color: 'text-emerald-700 bg-emerald-50 border-emerald-300',
+      color: 'text-[#0056D2] bg-blue-50 border-blue-300',
       descEn: 'Outstanding result! You meet the highest standard for Chinese Government Scholarship admission.',
       descZh: '成绩优异！完全达到中国政府奖学金顶尖院校理科录取与面试豁免门槛。',
     };
@@ -135,7 +135,7 @@ export const ExamResultModal: React.FC<ExamResultModalProps> = ({
 
           <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-3">
             <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 flex flex-col justify-center">
-              <div className="flex items-center space-x-2 text-emerald-600 text-xs font-bold mb-1">
+              <div className="flex items-center space-x-2 text-[#0056D2] text-xs font-bold mb-1">
                 <CheckCircle2 className="w-4 h-4" />
                 <span>{isZh ? '正确题数' : 'Correct'}</span>
               </div>
@@ -229,7 +229,7 @@ export const ExamResultModal: React.FC<ExamResultModalProps> = ({
             <button
               onClick={() => setFilterMode('correct')}
               className={`px-3 py-1.5 rounded-lg transition-all ${
-                filterMode === 'correct' ? 'bg-white text-emerald-600 shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
+                filterMode === 'correct' ? 'bg-white text-[#0056D2] shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               {isZh ? `正确 (${session.correctCount})` : `Correct (${session.correctCount})`}
@@ -249,7 +249,7 @@ export const ExamResultModal: React.FC<ExamResultModalProps> = ({
                 key={q.id || idx}
                 className={`bg-white rounded-2xl border p-6 shadow-xs transition-all space-y-4 ${
                   isCorrect
-                    ? 'border-emerald-200'
+                    ? 'border-blue-200'
                     : isUnanswered
                     ? 'border-slate-300'
                     : 'border-rose-200 ring-1 ring-rose-100'
@@ -259,7 +259,7 @@ export const ExamResultModal: React.FC<ExamResultModalProps> = ({
                 <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                   <div className="flex items-center space-x-2.5">
                     <span className={`w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center text-white ${
-                      isCorrect ? 'bg-emerald-600' : isUnanswered ? 'bg-slate-400' : 'bg-rose-600'
+                      isCorrect ? 'bg-[#0056D2]' : isUnanswered ? 'bg-slate-400' : 'bg-rose-600'
                     }`}>
                       {idx + 1}
                     </span>
@@ -274,8 +274,8 @@ export const ExamResultModal: React.FC<ExamResultModalProps> = ({
 
                   <div className="flex items-center space-x-2">
                     {isCorrect ? (
-                      <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center gap-1">
-                        <Check className="w-3.5 h-3.5 text-emerald-700" />
+                      <span className="px-2.5 py-1 rounded-full bg-blue-100 text-[#0056D2] text-xs font-bold flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5 text-[#0056D2]" />
                         <span>{isZh ? '回答正确' : 'Correct'}</span>
                       </span>
                     ) : isUnanswered ? (
@@ -319,7 +319,7 @@ export const ExamResultModal: React.FC<ExamResultModalProps> = ({
 
                     let optBg = 'bg-slate-50 border-slate-200 text-slate-700';
                     if (isOfficialCorrect) {
-                      optBg = 'bg-emerald-50 border-emerald-400 text-emerald-950 font-semibold ring-1 ring-emerald-400';
+                      optBg = 'bg-blue-50/80 border-[#0056D2] text-blue-950 font-semibold ring-1 ring-blue-300';
                     } else if (isCandidateChoice && !isCorrect) {
                       optBg = 'bg-rose-50 border-rose-400 text-rose-950 font-medium ring-1 ring-rose-300';
                     }
@@ -340,7 +340,7 @@ export const ExamResultModal: React.FC<ExamResultModalProps> = ({
                             </span>
                           )}
                           {isOfficialCorrect && (
-                            <span className="inline-block mt-1 text-[10px] font-bold text-emerald-700">
+                            <span className="inline-block mt-1 text-[10px] font-bold text-[#0056D2]">
                               {isZh ? '✓ 官方标准答案' : '✓ Official Answer'}
                             </span>
                           )}

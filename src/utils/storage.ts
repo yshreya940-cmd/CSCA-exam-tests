@@ -1,7 +1,12 @@
 import { UserProgress, QuizSession, MistakeRecord, Question, Subject } from '../types/csca';
 import { OFFICIAL_QUESTION_BANK } from '../data/questionBank';
 
-const STORAGE_KEY = 'csca_user_progress_v1';
+export function getStorageKey(userId?: string): string {
+  if (userId && userId.trim()) {
+    return `csca_user_progress_${userId.trim()}`;
+  }
+  return 'csca_user_progress_guest';
+}
 
 /**
  * Strips all undefined properties from an object recursively
@@ -23,38 +28,45 @@ const DEFAULT_SUBJECT_STATS: Record<Subject, {
   Mathematics: { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
   Physics: { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
   Chemistry: { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
+  Chinese: { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
   'Science Chinese': { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
   'Humanities Chinese': { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
   'Professional Chinese': { attempted: 0, correct: 0, testsTaken: 0, highestScore: 0, latestScore: 0 },
 };
 
-export const INITIAL_USER_PROGRESS: UserProgress = {
-  candidateId: 'CSC-2026-IN9834',
-  candidateName: 'Scholar Aspirant',
-  candidateEmail: 'candidate@csca.edu.cn',
-  applicationType: 'CGS',
-  targetUniversity: 'Tsinghua University / Peking University / Fudan',
-  registeredSubjects: ['Mathematics', 'Physics', 'Chemistry', 'Science Chinese', 'Humanities Chinese'],
-  sessionsHistory: [],
-  totalQuestionsAttempted: 0,
-  totalCorrect: 0,
-  streakDays: 3,
-  lastActiveDate: new Date().toISOString().split('T')[0],
-  subjectStats: { ...DEFAULT_SUBJECT_STATS },
-  moduleMastery: {},
-  mistakeBook: [],
-};
+export function createInitialUserProgress(userId?: string, email?: string, name?: string): UserProgress {
+  return {
+    candidateId: userId ? `CSC-${userId.slice(0, 8).toUpperCase()}` : 'CSC-2026-CANDIDATE',
+    candidateName: name || 'CSC Scholar',
+    candidateEmail: email || '',
+    applicationType: 'CGS',
+    targetUniversity: 'Tsinghua University / Peking University / Fudan',
+    registeredSubjects: ['Mathematics', 'Physics', 'Chemistry', 'Science Chinese', 'Humanities Chinese'],
+    sessionsHistory: [],
+    totalQuestionsAttempted: 0,
+    totalCorrect: 0,
+    streakDays: 1,
+    lastActiveDate: new Date().toISOString().split('T')[0],
+    subjectStats: { ...DEFAULT_SUBJECT_STATS },
+    moduleMastery: {},
+    mistakeBook: [], // Strictly empty for new users: no shared errors!
+  };
+}
 
-export function loadUserProgress(): UserProgress {
+export const INITIAL_USER_PROGRESS: UserProgress = createInitialUserProgress();
+
+export function loadUserProgress(userId?: string): UserProgress {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const key = getStorageKey(userId);
+    const raw = localStorage.getItem(key);
     if (!raw) {
-      saveUserProgress(INITIAL_USER_PROGRESS);
-      return INITIAL_USER_PROGRESS;
+      const initial = createInitialUserProgress(userId);
+      saveUserProgress(initial, userId);
+      return initial;
     }
     const parsed = JSON.parse(raw);
     return {
-      ...INITIAL_USER_PROGRESS,
+      ...createInitialUserProgress(userId),
       ...parsed,
       subjectStats: {
         ...DEFAULT_SUBJECT_STATS,
@@ -66,14 +78,15 @@ export function loadUserProgress(): UserProgress {
     };
   } catch (e) {
     console.error('Failed to load user progress from storage:', e);
-    return INITIAL_USER_PROGRESS;
+    return createInitialUserProgress(userId);
   }
 }
 
-export function saveUserProgress(progress: UserProgress): boolean {
+export function saveUserProgress(progress: UserProgress, userId?: string): boolean {
   try {
+    const key = getStorageKey(userId || progress.candidateId);
     const clean = sanitizePayload(progress);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
+    localStorage.setItem(key, JSON.stringify(clean));
     return true;
   } catch (e) {
     console.error('Failed to save user progress:', e);
@@ -84,8 +97,8 @@ export function saveUserProgress(progress: UserProgress): boolean {
 /**
  * Record a completed quiz session into the user's progress and update all metrics
  */
-export function recordCompletedSession(session: QuizSession): UserProgress {
-  const current = loadUserProgress();
+export function recordCompletedSession(session: QuizSession, userId?: string): UserProgress {
+  const current = loadUserProgress(userId);
   const sessionCopy = sanitizePayload(session);
 
   const updatedHistory = [sessionCopy, ...current.sessionsHistory.filter(s => s.id !== session.id)];
@@ -184,62 +197,14 @@ export function recordCompletedSession(session: QuizSession): UserProgress {
     lastActiveDate: today,
   };
 
-  saveUserProgress(updatedProgress);
+  saveUserProgress(updatedProgress, userId);
   return updatedProgress;
 }
 
 /**
- * Seed realistic baseline progress data for first-time visitors
+ * Clean baseline progress - no seeded dummy mistakes!
  */
-export function seedBaselineProgress(): UserProgress {
-  const current = loadUserProgress();
-  if (current.sessionsHistory.length > 0) return current;
-
-  // Create a realistic sample mock exam test for Mathematics & Physics
-  const sampleMathQuestions = OFFICIAL_QUESTION_BANK.filter(q => q.subject === 'Mathematics');
-  const samplePhysQuestions = OFFICIAL_QUESTION_BANK.filter(q => q.subject === 'Physics');
-
-  const mathSession: QuizSession = {
-    id: 'seed-math-01',
-    mode: 'topic',
-    subject: 'Mathematics',
-    moduleTitle: 'Functions & Calculus',
-    totalQuestions: sampleMathQuestions.length,
-    timeLimitSeconds: 1800,
-    timeSpentSeconds: 742,
-    questions: sampleMathQuestions,
-    userAnswers: { 0: 1, 1: 0, 2: 1, 3: 1, 4: 1 }, // 4 correct, 1 wrong
-    flaggedQuestions: { 3: true },
-    isCompleted: true,
-    score: 80,
-    correctCount: 4,
-    incorrectCount: 1,
-    unansweredCount: 0,
-    accuracy: 80,
-    startedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
-    completedAt: new Date(Date.now() - 86400000 * 2 + 742000).toISOString(),
-  };
-
-  const physSession: QuizSession = {
-    id: 'seed-phys-01',
-    mode: 'mock',
-    subject: 'Physics',
-    totalQuestions: samplePhysQuestions.length,
-    timeLimitSeconds: 3600,
-    timeSpentSeconds: 1980,
-    questions: samplePhysQuestions,
-    userAnswers: { 0: 1, 1: 2, 2: 0, 3: 1, 4: 1 }, // 5 correct (100%)
-    flaggedQuestions: {},
-    isCompleted: true,
-    score: 100,
-    correctCount: 5,
-    incorrectCount: 0,
-    unansweredCount: 0,
-    accuracy: 100,
-    startedAt: new Date(Date.now() - 86400000).toISOString(),
-    completedAt: new Date(Date.now() - 86400000 + 1980000).toISOString(),
-  };
-
-  recordCompletedSession(mathSession);
-  return recordCompletedSession(physSession);
+export function seedBaselineProgress(userId?: string): UserProgress {
+  return loadUserProgress(userId);
 }
+

@@ -303,7 +303,7 @@ export const AiGeneratorTutor: React.FC<AiGeneratorTutorProps> = ({
 
                     {isAnswered && (
                       <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold flex items-center gap-1 ${
-                        isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                        isCorrect ? 'bg-blue-100 text-[#0056D2]' : 'bg-rose-100 text-rose-800'
                       }`}>
                         {isCorrect ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
                         <span>{isCorrect ? (isZh ? '回答正确' : 'Correct') : (isZh ? '回答错误' : 'Incorrect')}</span>
@@ -324,9 +324,9 @@ export const AiGeneratorTutor: React.FC<AiGeneratorTutorProps> = ({
 
                       let btnStyle = 'bg-white hover:bg-slate-50 border-slate-200';
                       if (isSelected) {
-                        btnStyle = isCorrect ? 'bg-emerald-50 border-emerald-500 text-emerald-950 font-semibold' : 'bg-rose-50 border-rose-500 text-rose-950';
+                        btnStyle = isCorrect ? 'bg-blue-50 border-[#0056D2] text-blue-950 font-semibold' : 'bg-rose-50 border-rose-500 text-rose-950';
                       } else if (isRevealed && isOfficialCorrect) {
-                        btnStyle = 'bg-emerald-50 border-emerald-400 text-emerald-950 font-semibold ring-1 ring-emerald-400';
+                        btnStyle = 'bg-blue-50/80 border-[#0056D2] text-blue-950 font-semibold ring-1 ring-blue-300';
                       }
 
                       return (
@@ -367,7 +367,7 @@ export const AiGeneratorTutor: React.FC<AiGeneratorTutorProps> = ({
                     <div className="p-4 rounded-xl bg-purple-50/60 border border-purple-200 text-xs sm:text-sm text-slate-800 space-y-2">
                       <div className="font-bold text-purple-900">
                         {isZh ? '正确答案: ' : 'Correct Key: '}
-                        <span className="text-emerald-700 font-mono">Option {optionLetters[q.correctOption]}</span>
+                        <span className="text-[#0056D2] font-mono">Option {optionLetters[q.correctOption]}</span>
                       </div>
                       <p className="leading-relaxed text-slate-700 whitespace-pre-line">
                         {q.explanationEn}

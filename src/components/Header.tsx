@@ -9,10 +9,10 @@ import {
   Globe, 
   UserCheck,
   Search,
-  ChevronDown,
-  Layers
+  Database
 } from 'lucide-react';
-import { Language, UserProgress, Subject } from '../types/csca';
+import { User as FirebaseUser } from 'firebase/auth';
+import { Language, UserProgress } from '../types/csca';
 import { CscaLogo } from './CscaLogo';
 
 interface HeaderProps {
@@ -22,6 +22,9 @@ interface HeaderProps {
   onToggleLang: () => void;
   userProgress: UserProgress;
   onSearch?: (query: string) => void;
+  onOpenDatabaseGuide?: () => void;
+  currentUser?: FirebaseUser | null;
+  onOpenAuthModal?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -31,10 +34,12 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleLang,
   userProgress,
   onSearch,
+  onOpenDatabaseGuide,
+  currentUser,
+  onOpenAuthModal,
 }) => {
   const isZh = lang === 'zh';
   const [searchQuery, setSearchQuery] = useState('');
-  const [isExploreOpen, setIsExploreOpen] = useState(false);
 
   const navItems = [
     { 
@@ -94,45 +99,72 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-[#d8f3dc] shadow-xs">
-      {/* 1. Institutional Top Ribbon - Deep Evergreen / Pastel Mint Accent */}
-      <div className="bg-[#122e22] text-[#d8f3dc] px-4 py-1.5 text-xs border-b border-[#0c2018]">
+    <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
+      {/* 1. Institutional Top Ribbon - Signature Coursera Navy with Blue Accent */}
+      <div className="bg-[#002554] text-blue-100 px-4 py-1.5 text-xs border-b border-[#001c40]">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
           {/* Left: Authority & CSCA by Apply for China */}
           <div className="flex items-center space-x-2 min-w-0">
-            <span className="flex-shrink-0 w-2 h-2 rounded-full bg-[#52b788] animate-pulse"></span>
+            <span className="flex-shrink-0 w-2 h-2 rounded-full bg-[#0056D2] animate-pulse"></span>
             <span className="font-semibold text-white truncate text-[11px] sm:text-xs">
               {isZh 
                 ? 'CSCA by Apply for China · 国家留学基金委 (CSC) CSCA 官方大纲全真机考系统' 
                 : 'CSCA by Apply for China · China Scholarship Council (CSC) CSCA Official Portal'}
             </span>
-            <span className="hidden lg:inline text-[#40916c]">|</span>
-            <span className="hidden lg:inline text-[#b7e4c7] text-[11px] font-normal flex-shrink-0">
+            <span className="hidden lg:inline text-blue-400">|</span>
+            <span className="hidden lg:inline text-blue-200 text-[11px] font-normal flex-shrink-0">
               {isZh ? '2025-2026 官方大纲与历年真题题库' : '2025-2026 Official Syllabus & Past Papers'}
             </span>
           </div>
 
           {/* Right: Candidate Info & Bilingual Switcher */}
-          <div className="flex items-center space-x-3 flex-shrink-0 text-[11px]">
-            <div className="hidden sm:flex items-center space-x-1.5 text-[#b7e4c7]">
-              <UserCheck className="w-3.5 h-3.5 text-[#74c69d]" />
+          <div className="flex items-center space-x-2.5 flex-shrink-0 text-[11px]">
+            <div className="hidden sm:flex items-center space-x-1.5 text-blue-200">
+              <UserCheck className="w-3.5 h-3.5 text-blue-300" />
               <span className="font-mono text-white font-medium">{userProgress.candidateId}</span>
-              <span className="text-[#95d5b2]">({userProgress.applicationType})</span>
+              <span className="text-blue-300">({userProgress.applicationType})</span>
             </div>
+
+            {/* Login / Profile Button */}
+            {onOpenAuthModal && (
+              <button
+                onClick={onOpenAuthModal}
+                className={`flex items-center space-x-1.5 px-2.5 py-1 rounded transition-colors shadow-xs active:scale-95 cursor-pointer border ${
+                  currentUser
+                    ? 'bg-blue-900/80 hover:bg-blue-800 text-sky-200 border-sky-400/40'
+                    : 'bg-[#001c40] hover:bg-[#003366] text-white border-blue-400/40 font-semibold'
+                }`}
+                title={currentUser ? (isZh ? '考生考籍与云端档案' : 'Candidate Account') : (isZh ? '登录或注册' : 'Sign In')}
+              >
+                {currentUser ? (
+                  <>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span className="font-medium text-[11px] max-w-[130px] truncate">
+                      {currentUser.displayName || currentUser.email?.split('@')[0]}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <UserCheck className="w-3.5 h-3.5 text-sky-300" />
+                    <span>{isZh ? '邮箱登录' : 'Sign In'}</span>
+                  </>
+                )}
+              </button>
+            )}
 
             <button
               onClick={onToggleLang}
-              className="flex items-center space-x-1.5 px-2.5 py-1 rounded bg-[#0c2018] hover:bg-[#183d2e] text-[#d8f3dc] border border-[#40916c]/40 transition-colors shadow-xs active:scale-95 cursor-pointer"
+              className="flex items-center space-x-1.5 px-2 py-1 rounded bg-[#001c40] hover:bg-[#003366] text-blue-100 border border-blue-400/30 transition-colors shadow-xs active:scale-95 cursor-pointer"
               title={isZh ? 'Switch to English' : '切换为中文'}
             >
-              <Globe className="w-3.5 h-3.5 text-[#74c69d]" />
+              <Globe className="w-3.5 h-3.5 text-blue-300" />
               <span className="font-semibold text-[11px]">{isZh ? 'English' : '中文'}</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* 2. Main Header Bar with Pastel Green Accents */}
+      {/* 2. Main Header Bar - Classic Coursera Blue Theme without Explore Dropdown */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-3 sm:gap-6">
           {/* Brand Logo: CSCA by Apply for China */}
@@ -143,69 +175,18 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <CscaLogo size="sm" className="hidden sm:flex" />
               <div className="flex items-baseline space-x-1.5">
-                <span className="text-2xl font-black tracking-tight text-[#1b4332] font-sans group-hover:text-[#2d6a4f] transition-colors">
+                <span className="text-2xl font-black tracking-tight text-[#0056D2] font-sans group-hover:text-[#00419e] transition-colors">
                   CSCA
                 </span>
-                <span className="text-[#74c69d] text-lg font-light">|</span>
-                <span className="text-xs sm:text-sm font-bold tracking-tight text-[#2d6a4f] group-hover:text-[#1b4332] leading-none transition-colors">
+                <span className="text-slate-400 text-lg font-light">|</span>
+                <span className="text-xs sm:text-sm font-bold tracking-tight text-slate-800 group-hover:text-[#0056D2] leading-none transition-colors">
                   by Apply for China
                 </span>
               </div>
             </div>
-
-            {/* "Explore" dropdown button in pastel green theme */}
-            <div className="relative hidden md:block">
-              <button
-                onClick={() => setIsExploreOpen(!isExploreOpen)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#388e6c] text-[#2d6a4f] hover:bg-[#ecfdf5] font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
-              >
-                <span>{isZh ? '浏览科目' : 'Explore'}</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform text-[#388e6c] ${isExploreOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {isExploreOpen && (
-                <div 
-                  className="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-[#d8f3dc] py-2 z-50 animate-in fade-in slide-in-from-top-1"
-                  onMouseLeave={() => setIsExploreOpen(false)}
-                >
-                  <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#40916c]">
-                    {isZh ? '官方考试科目' : 'CSCA Subjects'}
-                  </div>
-                  {[
-                    { name: 'Mathematics (高等数学)', subj: 'Mathematics' as Subject },
-                    { name: 'Physics (大学物理)', subj: 'Physics' as Subject },
-                    { name: 'Chemistry (基础化学)', subj: 'Chemistry' as Subject },
-                    { name: 'Professional Chinese (专业汉语)', subj: 'Professional Chinese' as Subject },
-                  ].map((item) => (
-                    <button
-                      key={item.subj}
-                      onClick={() => {
-                        setIsExploreOpen(false);
-                        onTabChange('hub');
-                      }}
-                      className="w-full text-left px-4 py-2 text-xs sm:text-sm text-slate-700 hover:bg-[#ecfdf5] hover:text-[#1b4332] transition-colors flex items-center justify-between"
-                    >
-                      <span>{item.name}</span>
-                      <ChevronDown className="w-3.5 h-3.5 -rotate-90 text-[#74c69d]" />
-                    </button>
-                  ))}
-                  <div className="border-t border-[#e8f5e9] my-1"></div>
-                  <button
-                    onClick={() => {
-                      setIsExploreOpen(false);
-                      onTabChange('syllabus');
-                    }}
-                    className="w-full text-left px-4 py-2 text-xs text-[#2d6a4f] font-semibold hover:bg-[#ecfdf5] flex items-center gap-2"
-                  >
-                    <Layers className="w-3.5 h-3.5 text-[#388e6c]" />
-                    <span>{isZh ? '查看 2025 官方完整大纲' : 'View Full 2025 Syllabus'}</span>
-                  </button>
-                </div>
-              )}
-            </div>
           </div>
 
-          {/* Search Bar - Pastel Green Accent */}
+          {/* Search Bar - Clean Blue Theme */}
           <form 
             onSubmit={handleSearchSubmit}
             className="flex-1 max-w-md hidden lg:flex items-center relative"
@@ -216,12 +197,12 @@ export const Header: React.FC<HeaderProps> = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={isZh ? '搜索历年真题、科目模块或模拟试卷...' : 'What do you want to learn? (e.g. Mathematics, Past Papers)'}
-                className="w-full pl-9 pr-10 py-2 text-xs sm:text-sm rounded-full border border-[#b7e4c7] focus:outline-none focus:border-[#388e6c] focus:ring-1 focus:ring-[#52b788] text-slate-800 placeholder-slate-400 transition-all bg-[#f9fdfa] focus:bg-white"
+                className="w-full pl-9 pr-10 py-2 text-xs sm:text-sm rounded-full border border-slate-300 focus:outline-none focus:border-[#0056D2] focus:ring-1 focus:ring-[#0056D2] text-slate-800 placeholder-slate-400 transition-all bg-white"
               />
-              <Search className="w-4 h-4 text-[#74c69d] absolute left-3 top-2.5" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <button
                 type="submit"
-                className="w-7 h-7 rounded-full bg-[#388e6c] hover:bg-[#2d6a4f] text-white flex items-center justify-center absolute right-1.5 top-1.5 transition-colors cursor-pointer"
+                className="w-7 h-7 rounded-full bg-[#0056D2] hover:bg-[#00419e] text-white flex items-center justify-center absolute right-1.5 top-1.5 transition-colors cursor-pointer"
                 title="Search"
               >
                 <Search className="w-3.5 h-3.5" />
@@ -229,7 +210,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </form>
 
-          {/* Clean Text Navigation Items */}
+          {/* Clean Text Navigation Items - Coursera Blue Active State */}
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-3 flex-nowrap">
             {navItems.map((item) => {
               const isActive = currentTab === item.id;
@@ -239,13 +220,13 @@ export const Header: React.FC<HeaderProps> = ({
                   onClick={() => onTabChange(item.id)}
                   className={`relative px-2.5 py-2 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
                     isActive
-                      ? 'text-[#1b4332] border-b-2 border-[#2d6a4f]'
-                      : 'text-slate-600 hover:text-[#2d6a4f]'
+                      ? 'text-[#0056D2] border-b-2 border-[#0056D2]'
+                      : 'text-slate-600 hover:text-[#0056D2]'
                   }`}
                 >
                   <span>{isZh ? item.labelZh : item.shortEn}</span>
                   {typeof item.badge === 'number' && item.badge > 0 && (
-                    <span className="ml-1 px-1.5 py-0.2 bg-[#e63946] text-white text-[10px] font-bold rounded-full">
+                    <span className="ml-1 px-1.5 py-0.2 bg-[#0056D2] text-white text-[10px] font-bold rounded-full">
                       {item.badge}
                     </span>
                   )}
@@ -261,14 +242,14 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center space-x-2 pl-2 cursor-pointer group"
               title="My Learning & Analytics"
             >
-              <div className="w-8 h-8 rounded-full bg-[#388e6c] text-white font-bold text-xs flex items-center justify-center shadow-xs group-hover:bg-[#2d6a4f] transition-colors">
+              <div className="w-8 h-8 rounded-full bg-[#0056D2] text-white font-bold text-xs flex items-center justify-center shadow-xs group-hover:bg-[#00419e] transition-colors">
                 CS
               </div>
               <div className="hidden xl:flex flex-col text-left">
                 <span className="text-xs font-semibold text-slate-800 leading-tight">
                   {isZh ? '考生' : 'Candidate'}
                 </span>
-                <span className="text-[10px] text-[#40916c] leading-tight">
+                <span className="text-[10px] text-[#0056D2] leading-tight font-medium">
                   CSC Scholar
                 </span>
               </div>
@@ -278,7 +259,7 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* 3. Mobile/Tablet Responsive Scrollable Navigation */}
-      <div className="md:hidden border-t border-[#e8f5e9] bg-[#f9fdfa] px-3 py-2 overflow-x-auto scrollbar-none flex items-center space-x-2">
+      <div className="md:hidden border-t border-slate-200 bg-slate-50 px-3 py-2 overflow-x-auto scrollbar-none flex items-center space-x-2">
         {navItems.map((item) => {
           const isActive = currentTab === item.id;
           return (
@@ -287,13 +268,13 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => onTabChange(item.id)}
               className={`flex-shrink-0 px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
                 isActive
-                  ? 'bg-[#2d6a4f] text-white shadow-xs font-bold'
-                  : 'text-slate-700 hover:bg-[#ecfdf5] bg-white border border-[#d8f3dc]'
+                  ? 'bg-[#0056D2] text-white shadow-xs font-bold'
+                  : 'text-slate-700 hover:bg-blue-50 bg-white border border-slate-200'
               }`}
             >
               <span>{isZh ? item.labelZh : item.shortEn}</span>
               {typeof item.badge === 'number' && item.badge > 0 && (
-                <span className="ml-1 px-1 py-0.2 bg-[#e63946] text-white text-[9px] font-bold rounded-full">
+                <span className="ml-1 px-1 py-0.2 bg-[#0056D2] text-white text-[9px] font-bold rounded-full">
                   {item.badge}
                 </span>
               )}

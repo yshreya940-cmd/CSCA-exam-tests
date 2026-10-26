@@ -19,9 +19,9 @@ export interface Question {
   difficulty: 'Standard' | 'Challenging' | 'Advanced';
   questionEn: string;
   questionZh: string;
-  optionsEn: [string, string, string, string];
-  optionsZh: [string, string, string, string];
-  correctOption: 0 | 1 | 2 | 3;
+  optionsEn: string[];
+  optionsZh: string[];
+  correctOption: number;
   explanationEn: string;
   explanationZh: string;
   formula?: string;

@@ -1,0 +1,271 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Candidate profile details and lifetime test metrics",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the candidate"
+        },
+        "email": {
+          "type": "string",
+          "description": "Candidate contact email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Full name or English display name of candidate"
+        },
+        "candidateId": {
+          "type": "string",
+          "description": "CSCA candidate registration identifier"
+        },
+        "applicationType": {
+          "type": "string",
+          "enum": ["CGS", "Self-Funded", "University-Direct"],
+          "description": "Admission scholarship stream"
+        },
+        "targetUniversity": {
+          "type": "string",
+          "description": "Target Chinese university"
+        },
+        "registeredSubjects": {
+          "type": "array",
+          "description": "Subjects registered for the CSCA examination"
+        },
+        "streakDays": {
+          "type": "number",
+          "description": "Consecutive days of study streak"
+        },
+        "lastActiveDate": {
+          "type": "string",
+          "description": "ISO date string of last active testing session"
+        },
+        "totalQuestionsAttempted": {
+          "type": "number",
+          "description": "Lifetime number of attempted questions"
+        },
+        "totalCorrect": {
+          "type": "number",
+          "description": "Lifetime number of correct responses"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Profile creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["userId", "email", "candidateId", "applicationType"]
+    },
+    "QuizSession": {
+      "title": "QuizSession",
+      "description": "Historical computer-based testing assessment submission",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique session identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Candidate UID who sat for the test"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject name"
+        },
+        "mode": {
+          "type": "string",
+          "description": "Quiz mode"
+        },
+        "examPaper": {
+          "type": "string",
+          "description": "Official paper name or tag"
+        },
+        "paperId": {
+          "type": "string",
+          "description": "Paper slug identifier"
+        },
+        "totalQuestions": {
+          "type": "number",
+          "description": "Total question count"
+        },
+        "timeSpentSeconds": {
+          "type": "number",
+          "description": "Time spent in seconds"
+        },
+        "score": {
+          "type": "number",
+          "description": "Scaled 100-point score"
+        },
+        "correctCount": {
+          "type": "number",
+          "description": "Correct question count"
+        },
+        "incorrectCount": {
+          "type": "number",
+          "description": "Incorrect question count"
+        },
+        "accuracy": {
+          "type": "number",
+          "description": "Accuracy percentage"
+        },
+        "completedAt": {
+          "type": "string",
+          "description": "Submission completion timestamp"
+        }
+      },
+      "required": ["id", "userId", "subject", "score", "totalQuestions"]
+    },
+    "MistakeRecord": {
+      "title": "MistakeRecord",
+      "description": "Candidate personalized mistake item logged for review",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique mistake record ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Candidate UID owner"
+        },
+        "questionId": {
+          "type": "string",
+          "description": "Target Question ID"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject of the question"
+        },
+        "module": {
+          "type": "string",
+          "description": "Syllabus module"
+        },
+        "selectedOption": {
+          "type": "number",
+          "description": "Candidate wrong selected option index"
+        },
+        "correctOption": {
+          "type": "number",
+          "description": "Correct option index"
+        },
+        "resolved": {
+          "type": "boolean",
+          "description": "Whether candidate has mastered the question"
+        },
+        "incorrectAttempts": {
+          "type": "number",
+          "description": "Count of times missed"
+        },
+        "firstFailedAt": {
+          "type": "string",
+          "description": "Initial failure timestamp"
+        },
+        "lastFailedAt": {
+          "type": "string",
+          "description": "Most recent failure timestamp"
+        }
+      },
+      "required": ["id", "userId", "questionId", "subject", "correctOption"]
+    },
+    "ExamPaper": {
+      "title": "ExamPaper",
+      "description": "Official CSCA exam paper metadata in catalog",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Paper slug"
+        },
+        "nameEn": {
+          "type": "string",
+          "description": "English title"
+        },
+        "nameZh": {
+          "type": "string",
+          "description": "Chinese title"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject category"
+        },
+        "totalQuestions": {
+          "type": "number",
+          "description": "Number of questions"
+        },
+        "durationMinutes": {
+          "type": "number",
+          "description": "Time duration in minutes"
+        },
+        "sessionMonth": {
+          "type": "string",
+          "description": "Session date tag"
+        }
+      },
+      "required": ["id", "nameEn", "nameZh", "subject"]
+    },
+    "Question": {
+      "title": "Question",
+      "description": "Official exam question item",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Question ID"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Subject category"
+        },
+        "questionEn": {
+          "type": "string",
+          "description": "Stem in English"
+        },
+        "questionZh": {
+          "type": "string",
+          "description": "Stem in Chinese"
+        },
+        "optionsEn": {
+          "type": "array",
+          "description": "Multiple choice options English"
+        },
+        "optionsZh": {
+          "type": "array",
+          "description": "Multiple choice options Chinese"
+        },
+        "correctOption": {
+          "type": "number",
+          "description": "Correct choice index"
+        }
+      },
+      "required": ["id", "subject", "questionEn", "questionZh", "correctOption"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "entities/User" },
+      "description": "Candidate profile details and academic metrics"
+    },
+    "/users/{userId}/sessions/{sessionId}": {
+      "schema": { "$ref": "entities/QuizSession" },
+      "description": "Completed exam sessions and scoring history"
+    },
+    "/users/{userId}/mistakes/{mistakeId}": {
+      "schema": { "$ref": "entities/MistakeRecord" },
+      "description": "Candidate personal mistake notebook records"
+    },
+    "/examPapers/{paperId}": {
+      "schema": { "$ref": "entities/ExamPaper" },
+      "description": "Catalog of official past exam papers"
+    },
+    "/questions/{questionId}": {
+      "schema": { "$ref": "entities/Question" },
+      "description": "Official CSCA questions repository"
+    }
+  }
+}

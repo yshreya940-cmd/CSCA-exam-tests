@@ -263,7 +263,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
 
             <button
               onClick={() => setShowSubmitModal(true)}
-              className="px-4 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1 transition-all"
+              className="px-4 py-1.5 rounded-lg text-xs font-bold bg-[#0056D2] hover:bg-[#00419e] text-white shadow-sm flex items-center gap-1 transition-all cursor-pointer"
             >
               <Check className="w-4 h-4" />
               <span>{isZh ? '交卷 (Submit)' : 'Submit Exam'}</span>
@@ -412,7 +412,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                         <span className="font-bold text-slate-900">
                           {isZh ? '正确答案: ' : 'Correct Answer: '}
                         </span>
-                        <span className="px-2 py-0.5 rounded bg-emerald-600 text-white font-bold">
+                        <span className="px-2 py-0.5 rounded bg-[#0056D2] text-white font-bold">
                           Option {optionLetters[currentQ.correctOption]}
                         </span>
                       </div>
@@ -465,7 +465,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
               ) : (
                 <button
                   onClick={() => setShowSubmitModal(true)}
-                  className="flex items-center space-x-1 px-5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition-colors"
+                  className="flex items-center space-x-1 px-5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#0056D2] hover:bg-[#00419e] text-white shadow-md transition-colors cursor-pointer"
                 >
                   <Check className="w-4 h-4" />
                   <span>{isZh ? '交卷核分' : 'Review & Submit'}</span>
@@ -554,7 +554,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
             {/* Submit Action */}
             <button
               onClick={() => setShowSubmitModal(true)}
-              className="w-full py-3 bg-slate-900 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5"
+              className="w-full py-3 bg-[#002554] hover:bg-[#0056D2] text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <Check className="w-4 h-4" />
               <span>{isZh ? '确认交卷并生成评测报告' : 'Submit & Grade Exam'}</span>
@@ -609,7 +609,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
             <div className="flex items-center gap-3 pt-2">
               <button
                 onClick={() => setShowSubmitModal(false)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition-colors"
+                className="flex-1 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition-colors cursor-pointer"
               >
                 {isZh ? '继续答题' : 'Back to Test'}
               </button>
@@ -618,7 +618,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                   setShowSubmitModal(false);
                   onSubmitExam(session);
                 }}
-                className="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors shadow-md"
+                className="flex-1 py-2.5 rounded-xl bg-[#0056D2] hover:bg-[#00419e] text-white text-xs font-bold transition-colors shadow-md cursor-pointer"
               >
                 {isZh ? '确认交卷' : 'Confirm Submission'}
               </button>

@@ -1,0 +1,86 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidUser(data) {
+      return data.userId is string &&
+             data.userId == request.auth.uid &&
+             data.email is string &&
+             data.email.size() <= 256 &&
+             data.candidateId is string &&
+             data.candidateId.size() <= 64 &&
+             data.applicationType in ['CGS', 'Self-Funded', 'University-Direct'];
+    }
+
+    function isValidQuizSession(data, userId) {
+      return data.userId == userId &&
+             data.subject is string &&
+             data.score is number &&
+             data.score >= 0 && data.score <= 100 &&
+             data.totalQuestions is number &&
+             data.totalQuestions > 0;
+    }
+
+    function isValidMistake(data, userId) {
+      return data.userId == userId &&
+             data.questionId is string &&
+             data.subject is string &&
+             data.correctOption is number;
+    }
+
+    // 1. User Profiles - Owner bound read and write
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false; // Block user enumeration
+      allow create: if isOwner(userId) && isValidId(userId) && isValidUser(request.resource.data);
+      allow update: if isOwner(userId) && isValidId(userId) && isValidUser(request.resource.data);
+      allow delete: if false;
+
+      // 2. Candidate Exam Sessions Subcollection
+      match /sessions/{sessionId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(sessionId) && isValidQuizSession(request.resource.data, userId);
+        allow update: if isOwner(userId) && isValidId(sessionId) && isValidQuizSession(request.resource.data, userId);
+        allow delete: if isOwner(userId);
+      }
+
+      // 3. Candidate Mistake Records Subcollection
+      match /mistakes/{mistakeId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(mistakeId) && isValidMistake(request.resource.data, userId);
+        allow update: if isOwner(userId) && isValidId(mistakeId) && isValidMistake(request.resource.data, userId);
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    // 4. Public Read-Only Exam Papers Catalog
+    match /examPapers/{paperId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // 5. Public Read-Only Questions Repository
+    match /questions/{questionId} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

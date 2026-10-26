@@ -1,0 +1,278 @@
+December 	2025 	CSCA
+Select this question (there are 4 options per question, and only 1 is correct)
+1 Which of the following physical quantities is not a vector?
+A. intensity of magnetization B. momentum
+C. electric field intensity D. potential energy
+2. The gravitational force acting on an object on Mars is one-third of its gravitational force on
+Earth. Therefore, the gravitational force on an object with mass m=4.8kg on Mars is (). (g=10 m/s
+²)
+A.144N 	B.24N
+C.48N 	D.16N
+3. A spring with a spring constant k=100 N/m is stretched from its original length of 10cm to
+15cm under a tension force F. What is the magnitude of F?
+A.5N 	B.25N
+C.10N 	D.15N
+4. An object with mass m=4kg is stationary on a horizontal surface, where the sliding friction
+coefficient between the surface and the object is μ=0.1. When a horizontal force of 2N is applied to
+the object, the frictional force exerted on it is ().
+A. 	2N 	B.3N
+C.4N 	D.6N
+5. An object is subjected to three forces with magnitudes 1 = 2, 2 = 4, and 3 = 6. The maximum
+resultant force acting on the object is ().
+A.12N 	B.0N
+C10N 	D.24N
+6 On a smooth horizontal surface, an object with mass m=2kg is subjected to a horizontal force F,
+starting from rest and undergoing uniform acceleration. If its displacement within 2 seconds is 8m,
+then the magnitude of the horizontal force F is ().
+A.10N 	B. 	6N
+C.8N 	D.2N
+7 An object moving in uniform acceleration on a smooth horizontal surface from rest has an
+acceleration of a=2m/s². What is its velocity at the end of 4 seconds?
+A. 	4m/s 	B.16m/s
+C. 	8m/s 	D.2m/s
+8 An object is dropped from a height of 100 meters. What is its height from the ground at 4
+seconds? (g=10 m/s²)
+A.45m 	B.10m
+C. 	80m 	D.20m
+9 An object with mass m=5kg is placed on a long smooth inclined plane with an inclination angle
+θ=30°. Starting from rest, the distance it travels in 2 seconds is (). (g=10m/s²)
+A.5m 	B.1m
+C.10m 	D.2m
+10. For a 2kg object subjected to two forces of 6N and 8N respectively, what is its maximum
+acceleration?
+A.4m/s² 	B.7m/s²
+C.3m/s² 	D.5m/s²
+11. A 0.5-meter-long straight conductor is placed perpendicular to a uniform magnetic field. When
+a 10A current flows through it, the conductor experiences an Ampere force of 1.5N. Determine the
+magnetic induction intensity of the field.
+A.0.3T 	B.0.2T
+C.0.1T 	D.0.4T
+
+
+
+
+12. A point moves in uniform circular motion with a velocity of v=6 m/s and a radius of R=3 m.
+What is its angular velocity?
+A.2𝐀󒰀𝐀𧰀/𝐀 	B.3𝐀󒰀𝐀𧰀/𝐀
+C. 	2rad/s 	D.3rad/s
+13 As shown in the figure, an object moves from point A to point C via point B along two
+semicircles with a radius of R=6m in a time of t=4s. What is the average velocity of the object?
+A.6m/s 	B.12m/s
+C.6𝐀󒰀/𝐀 	D.3𝐀󒰀/𝐀
+14. Which of the following statements about distance and displacement is correct?
+A. Distance is a vector, displacement is a scalar.
+B.The magnitude of displacement is not necessarily equal to the distance traveled.
+C. Both distance and displacement are vectors
+D.The magnitude of displacement can be equal to the distance traveled.
+15. An object with mass m=0.2kg moves at constant velocity v=20m/s on a smooth horizontal
+surface. What is its momentum?
+A. 	0.8kg·m/s 	B.4kg·m/s
+C.0.4kg·m/s 	D.8kg·m/s
+16. The graph of the displacement (x) of a toy car moving in a straight line versus time (t) is shown
+in the figure. Which of the following statements is correct?
+A. Within 0 to 4 seconds, the toy car moves a distance of 8 meters. B. Between 4 and 5 seconds,
+the toy car moves at a speed of 0.8 meters per second.
+C. The toy car's speed is 1.0 m/s from 0 to 4 seconds. D. The toy car's average speed is 0.8 m/s
+from 0 to 5 seconds. 17. An object with mass m=5kg is placed on a smooth inclined plane with an
+angle of θ=30° and a height of 20 m. Starting from rest, the gravitational impulse it experiences in
+2 seconds is (). (g=10 m/s²)
+A.50N·s 	B.25N·s
+C.200N·s 	D.100N·s
+18. When a 10kg object is pulled horizontally by a force F of 20N, it moves 5m on a rough
+horizontal surface with a frictional force f=5N. The work done by the pulling force F is ().
+A.100J 	B.75J
+C.-25J 	D.25J
+19 A 3kg ball on a smooth surface is subjected to an external force that increases its velocity from
+2 m/s to 6 m/s. Calculate the work done by this force.
+A.54J 	B. 	60J
+C.48J 	D.6J
+
+
+
+
+2. When light enters a medium from air at an incident angle i=60°, the refractive angle r=30°, and
+the refractive index of air is n=1, the refractive index of the medium is ().
+A. 	2 	B. 	3
+C. 	5 	D.1.5
+21. A spring oscillator undergoing simple harmonic motion completes one full cycle in 2 seconds.
+What is its frequency?
+A.2 	Hz 	B.0.5 	Hz
+C. 	0.2 	Hz 	D.5 	Hz
+22. A sound wave with a frequency of f=200 Hz travels through air at a speed of v=340 m/s. What
+is the wavelength of this sound wave?
+A.1.7m 	B.3.4m
+C.6.8m 	D.680m
+23. Each question has 4 options, and only 1 is correct.
+In a vacuum, two point charges are separated by a distance d, with a Coulomb force of F. If the
+distance between the charges is kept constant and the charge of one of them is doubled, the
+Coulomb force between them becomes ().
+(A) 2 times
+(B) 4 times
+A.2 times B.4 times
+1
+4
+C. times 1
+2
+D. times
+24. The velocity of a water drop with zero initial velocity falling from a height of 5m is (g = 10m/s
+2) ()
+A.10m/s 	B.5m/s
+C.2m/s 	D. 	20m/s
+25. The electric field lines are distributed as shown in the figure. If equal point charges are placed
+at points a and b within the electric field, the relationship between the electric forces acting on
+these charges is ().
+A.≥ 	B. 	=
+C.< 	D.>
+The total resistance of two resistors, 2620Ω and 30Ω, in parallel is ().
+A.50Ω 	B.60Ω
+C.10Ω 	D.12Ω
+27 𝐀1 	𝐀2
+𝐀1
+𝐀2
+𝐀1: 	𝐀2
+Two resistors with resistance values of =40Ω and =30Ω are connected in parallel and
+connected to a circuit with a voltage of 12V. The current ratio through the two resistors
+and is ()
+A.1:1 	B.1:2
+C.4:3 	D.3:4
+28. For an ideal gas of a given mass, if the temperature remains constant and the pressure
+decreases, its volume will ().
+A. invariant B. diminution
+C. All of the above answers are possible. D. largen
+
+
+
+
+29. −9 	4	
+A point charge of 3.0 × 10 C is placed in an electric field of 6.0 × 10 N/C. The magnitude
+of the electric force acting on the point charge is ().
+A.1.8 	× 	10−4N 	B.2.0 	× 	10−4N
+C.1.8 	× 	104N 	D. 	1.8 	× 	10−5N
+30. The international units of magnetic induction B and magnetic flux are ().
+A. Tesla, Weber B.Amperes, volts
+C. Pascal, Hertz D.Joules, watts
+31. When a beam of light strikes the air-glass interface at an angle of 30°, the angle between the
+reflected and incident rays is ().
+A.30° 	B.45°
+C.60° 	D.80°
+32. A 0.2-meter-long wire carrying a constant current is placed in a uniform magnetic field with a
+magnetic induction intensity of 0.8 T. If the maximum ampere force acting on the wire in the
+magnetic field is 0.08 N, the current flowing through the wire is ().
+A.0.5A 	B.5A
+C.0.2A 	D.2A
+33.
+𝐀1 3
+𝐀1 	𝐀2
+An ideal gas of a certain mass changes from state A to state B. The process A → B is an
+isobaric process (constant pressure). Given that the volume of state A is = 1.5m , the
+temperature of state A is = 300K, and the temperature of state B is = 400K, the volume of
+state B is ()
+A.1.5m3 	B.4.5m3
+C.2m3 	D.6m3
+35. 󒰀1	A ball of mass = 20kg is moving at v = 6m/s and collides with a car that is stationary on a
+smooth horizontal surface. The car has a mass of 40kg. What is the combined velocity of the ball
+and the car after the collision?
+A.2m/s 	B.3m/s
+C.4m/s 	D.5m/s
+36. A basketball with a mass of 0.5 kg is launched from the ground to a height of 1 meter, then
+falls back to the ground. The change in gravitational potential energy during this entire process is
+().
+A. 	5J 	B.0.5J
+C.10J 	D.0J
+37. As shown in the figure, a thin rope is fixed at point O at one end and suspended from the other
+end a ball A with a mass of m=6kg. When the rope forms a 30-degree angle with the vertical
+direction and the ball A is at rest, the horizontal force applied to the ball A should be () (g=10m/s²).
+A.10 	3 	B.12𝐀
+C.20 	3 	D.20𝐀
+38.
+9
+The diagram shows two charged metal spheres A and B in a vacuum, each carrying a charge of
+Q = ±3.0 × 10 −4 C, with a distance of r=6cm between them. Given the electrostatic constant k = 9
+× 10 N·m²/C², the electric field strength at the midpoint between the spheres is
+A.1.5 	× 	104𝐀/𝐀 	B. 	0𝐀/𝐀
+C.6.0 	× 	104𝐀/𝐀 	D.3.0 	× 	104𝐀/𝐀
+
+
+
+
+39. 𝐀0	A small ball is thrown horizontally from a building 20m high at a speed of = 20m/s. The air
+resistance is not considered. Find the velocity of the ball when it lands. (g = 10m/s2)
+A.40 	2m/s 	B.20 	2m/s
+C.40m/s 	D.20m/s
+40. As shown in the figure, two objects A and B with equal mass are placed on a horizontal disk
+rotating uniformly around a vertical axis. Since both objects remain stationary relative to the disk,
+the two objects ().
+A. The angular velocity is the same.
+The angular velocity of B.A is greater than that of B.
+C. The angular velocity of A is less than that of B. D.The linear velocity is the same.
+41. −6	
+A point charge with a charge of +4 × 10 C is moved from point A to point B in an electric
+field. The work done by the electric field force is
+−4	
+-8 × 10 J, then the potential difference between AB is ()
+A.-200V 	B.200V
+C.-2000V 	D. 	2000V
+42. Consider a point charge conductor A carrying 8q positive charge. At a distance r from A, there
+is another identical conductor B carrying-4q negative charge. When the two conductors are
+brought into contact and then returned to their original positions, the Coulomb force between them
+will be restored to its original value ().
+A.
+4
+1x
+B.4 times
+C.8 times 1
+D. times 8
+43. A bullet traveling at 700 m/s horizontally decelerates to 500 m/s after penetrating the first fixed
+wooden board. If it continues through a second identical wooden board, its velocity becomes ().
+A.200 	m/s 	B.100 	m/s
+C. 	50 	m/s 	D.300 	m/s
+44. A 2kg object starts from rest on a smooth horizontal surface and is subjected to a horizontal
+force. The graph of the force versus time is shown in the figure. What is the object's kinetic energy
+at the end of 2 seconds? (A) 25 (B) 16 (C) 36 (D) 50
+A.25 	B.16
+C.36 	D.50
+45. As shown in the figure, the horizontal platform AB is h=0.80 m above the ground. A slider
+moves in uniform acceleration along the platform from point A with an initial velocity of v₀=6.0
+m/s, and the dynamic friction coefficient between the slider and the platform is μ=0.25. After
+reaching the platform's edge at point B, the slider flies horizontally out. Given that AB=2.2 m, the
+horizontal distance from the slider's landing point to the platform's edge is (). (g=10)
+
+
+
+
+m/s²)
+A.3m 	B.1.5m
+C. 	1m 	D. 	2m
+46 As shown in the figure, the parallel horizontal metal rails are connected to resistors R at both
+ends. The wire ab can slide frictionlessly on the frame, and a uniform magnetic field passes
+perpendicularly through the frame plane. When ab moves uniformly to the right, which of the
+following statements is correct?
+A.
+move
+Once the wire ab reaches a certain velocity, removing the force B. If the wire ab moves at a
+constant speed and the resistance R is increased, the wire ab can also maintain uniform motion on
+the frame. Therefore, the force pulling the wire ab can be doubled.
+C. The higher the velocity of conductor ab, the lower the required pulling force. D. In addition to
+the pulling force, conductor ab is also subjected to magnetic field forces.
+act on
+47. As shown in the figure, a uniform horizontal electric field is present on a horizontal tabletop. A
+small object with mass m=0.1kg and charge Q=-2.0×10^-5C is placed at point O on the tabletop
+and released from rest. Given the sliding friction force f=0.2N between the object and the tabletop,
+the electric force F=0.4N acts to the right. Calculate the work done by the resultant force on the
+object over 2 seconds after release.
+A.3.2J 	B.0.8J
+C.2.4J 	D.1.6J
+
+
+
+
+48 In a scientific experimental apparatus, scientists are investigating a unique charge
+distribution. They are working on a smooth absolute...
+A triangular insulating pad model was placed on the horizontal plane, with three charge
+detectors positioned at vertices A, B, and C respectively. For further investigation, an
+electric field detector F was placed at point E, symmetrically about the zero-charge
+point. Which of the following statements is correct?
+A. The detector D reads zero B. The reading values of detector H vary
+C. The readings of detector D and detector F are the same. D. The detector D and F read the
+acceleration motion.
+
